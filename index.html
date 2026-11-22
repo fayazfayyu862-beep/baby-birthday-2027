@@ -39,6 +39,23 @@ transition:transform .3s ease,box-shadow .3s ease;
 .gallery img:active{
 transform:scale(1.04) rotate(0deg);
 box-shadow:0 8px 20px rgba(90,55,55,.25);
+}#photoViewer{
+display:none;
+position:fixed;
+inset:0;
+z-index:9999;
+background:rgba(35,15,25,.94);
+align-items:center;
+justify-content:center;
+padding:15px;
+}
+
+#photoViewer img{
+max-width:95%;
+max-height:85vh;
+object-fit:contain;
+border:8px solid #fffaf2;
+box-shadow:0 10px 40px #0008;
 }
 .note{margin:12px 0}
 footer{padding:30px;color:#a34865}
@@ -81,6 +98,8 @@ footer{padding:30px;color:#a34865}
 <img src="assets/photos/photo-13.jpg" alt="Our memory 13">
 <img src="assets/photos/photo-14.jpg" alt="Our memory 14">
 <img src="assets/photos/photo-15.jpg" alt="Our memory 15">
+<div id="photoViewer" onclick="this.style.display='none'">
+<img id="fullPhoto" src="" style="max-width:90%;max-height:85vh;border-radius:12px">
 </div>
 </section>
 
@@ -254,7 +273,13 @@ function update(){
  const s=Math.floor(distance%60000/1000);
  document.getElementById("countdown").textContent=d+" days "+h+" hours "+m+" minutes "+s+" seconds";
 }
-update();setInterval(update,1000);
+update();setInterval(update,1000);document.querySelectorAll('.gallery img:not(#fullPhoto)').forEach(photo=>{
+  photo.addEventListener('click',()=>{
+    document.getElementById('fullPhoto').src=photo.src;
+    document.getElementById('photoViewer').style.display='flex';
+  });
+});
+document.getElementById('fullPhoto').addEventListener('click',event=>event.stopPropagation());
 </script>
 </body>
 </html>
