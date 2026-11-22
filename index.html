@@ -271,6 +271,19 @@ font-style:italic;
  }
 @keyframes pulse{
 50%{transform:scale(1.15)}
+}.petal{
+  position:fixed;
+  top:-30px;
+  z-index:9998;
+  pointer-events:none;
+  animation:fall linear forwards;
+}
+
+@keyframes fall{
+  to{
+    transform:translateY(110vh) rotate(360deg);
+    opacity:0;
+  }
 }
 </style>
 </section>
@@ -297,7 +310,20 @@ update();setInterval(update,1000);document.querySelectorAll('.gallery img:not(#f
   photo.addEventListener('click',()=>{
     document.getElementById('fullPhoto').src=photo.src;
     document.getElementById('photoViewer').style.display='flex';
-  });
+  });function createPetal(){
+  const petal=document.createElement("div");
+  petal.className="petal";
+  petal.innerHTML="🌹";
+  petal.style.left=Math.random()*100+"vw";
+  petal.style.fontSize=(15+Math.random()*15)+"px";
+  petal.style.animationDuration=(5+Math.random()*5)+"s";
+
+  document.body.appendChild(petal);
+
+  setTimeout(()=>petal.remove(),10000);
+}
+
+setInterval(createPetal,800);
 });
 document.getElementById('fullPhoto').addEventListener('click',event=>event.stopPropagation());
 </script>
