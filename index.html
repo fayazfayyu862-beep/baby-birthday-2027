@@ -64,13 +64,57 @@ footer{padding:30px;color:#a34865}
 </section>
 
 <section class="card">
-<h2>Our Song 🎵</h2>
-<p>Our favourite song, just for us.</p>
-<audio id="ourSong" controls preload="none">
+<h2>Our Song ♡</h2>
+<p>Every heartbeat reminds me of you.</p>
+
+<div class="music-player">
+<button id="playSong" class="heart-button">♡</button>
+<p id="musicStatus">Made for my Baby ❤️</p>
+<audio id="ourSong" preload="metadata">
 <source src="assets/photos/our-song.mp3" type="audio/mpeg">
-Your browser does not support audio.
 </audio>
+</div>
 </section>
+
+<style>
+.music-player{
+background:#fff0f4;
+padding:25px;
+border-radius:22px;
+}
+.heart-button{
+width:75px;
+height:75px;
+border-radius:50%;
+background:#b44869;
+color:white;
+font-size:35px;
+}
+</style>
+
+<script>
+const song=document.getElementById("ourSong");
+const playButton=document.getElementById("playSong");
+const musicStatus=document.getElementById("musicStatus");
+
+playButton.addEventListener("click",()=>{
+if(song.paused){
+song.play();
+}else{
+song.pause();
+}
+});
+
+song.addEventListener("play",()=>{
+playButton.textContent="♥";
+musicStatus.textContent="Playing for Baby ❤️";
+});
+
+song.addEventListener("pause",()=>{
+playButton.textContent="♡";
+musicStatus.textContent="Paused ♡";
+});
+</script>
 
 <section>
 <h2>Five Little Love Notes 💌</h2>
