@@ -179,8 +179,19 @@ Blow the candles ❤️
 </section>
 
 <section class="card">
-<h2>A Little Gift For You 🎁</h2>
-<p>If I could give you one gift that lasts forever, I'd give you the ability to see yourself through my eyes. Maybe then you'd understand how special you are to me. You deserve beautiful things, not just today, but every day. Happy Birthday, my Baby. ❤️</p>
+  <h2>A Little Gift For You 🎁</h2>
+
+  <div id="giftBox" onclick="this.classList.toggle('opened'); document.getElementById('giftMessage').classList.toggle('hidden')" style="font-size:90px;cursor:pointer;">
+      🎁
+    </div>
+
+    <p style="font-size:14px;">Tap the gift to open your surprise ❤️</p>
+
+    <div id="giftMessage" class="hidden">
+      <h3>To My Beautiful Baby ❤️</h3>
+      <p>If I could give you one gift that lasts forever, I'd give you the ability to see yourself through my eyes. Maybe then you'd understand how special you are to me. You deserve beautiful things, not just today, but every day. Happy Birthday, my Baby. ❤️</p>
+    </div>
+  </div>
 </section>
 
 <section class="card love-letter">
