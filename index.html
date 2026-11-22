@@ -168,7 +168,13 @@ musicStatus.textContent="Paused ♡";
 <section class="card">
 <h2>Make a Birthday Wish 🎂</h2>
 <p>Close your eyes, make a wish and tap below.</p>
-<button onclick="document.getElementById('wish').classList.remove('hidden')">Blow the candles ❤️</button>
+<button onclick="document.getElementById('wish').classList.remove('hidden'); document.getElementById('birthdayCake').classList.remove('hidden')">
+Blow the candles ❤️
+</button><div id="birthdayCake" class="hidden" style="text-align:center;padding:25px;">
+  <div style="font-size:75px;animation:bounce 1s infinite;">🎂</div>
+  <h2 style="color:#b85c75;">Make a wish, Baby! ❤️</h2>
+  <p>May every beautiful dream of yours come true.</p>
+</div>
 <p id="wish" class="hidden">May all your beautiful wishes come true, Baby! ❤️</p>
 </section>
 
@@ -248,7 +254,10 @@ font-family:Georgia,serif;
 }
 .letter-paper p{
 font-style:italic;
-}
+}@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+ }
 @keyframes pulse{
 50%{transform:scale(1.15)}
 }
