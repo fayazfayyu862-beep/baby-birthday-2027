@@ -17,8 +17,29 @@ section{padding:35px 20px;max-width:850px;margin:auto}
 button{border:0;background:#a34865;color:white;padding:14px 24px;border-radius:30px;font-size:16px;cursor:pointer}
 #locked{min-height:65vh;display:flex;flex-direction:column;justify-content:center;padding:25px}
 #countdown{font-size:25px;color:#a34865;margin:20px}
-.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.gallery img{width:100%;height:190px;object-fit:cover;border-radius:14px;background:#f8dce3}
+.gallery{
+display:grid;
+grid-template-columns:repeat(2,minmax(0,1fr));
+gap:22px 14px;
+padding:12px 4px;
+}
+.gallery img{
+width:100%;
+height:210px;
+object-fit:cover;
+background:#fffaf2;
+padding:9px 9px 28px;
+border:1px solid #eadbc8;
+border-radius:3px;
+box-shadow:0 5px 14px rgba(90,55,55,.16);
+transform:rotate(-2deg);
+transition:transform .3s ease,box-shadow .3s ease;
+}
+.gallery img:nth-child(even){transform:rotate(2deg)}
+.gallery img:active{
+transform:scale(1.04) rotate(0deg);
+box-shadow:0 8px 20px rgba(90,55,55,.25);
+}
 .note{margin:12px 0}
 footer{padding:30px;color:#a34865}
 .hidden{display:none}
