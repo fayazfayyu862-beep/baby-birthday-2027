@@ -1,1 +1,8 @@
+Put your 15 birthday memories here.
 
+Name your photos:
+photo-01.jpg
+photo-02.jpg
+photo-03.jpg
+...
+photo-15.jpg
