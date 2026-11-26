@@ -198,30 +198,32 @@ Blow the candles ❤️
 <h2>A Letter For You 💌</h2>
 <p>There's something special waiting inside...</p>
 
-<details class="envelope">
-<summary>
-<div class="envelope-heart">❤️</div>
-<p>Tap to open your letter</p>
-</summary>
+<div id="birthdayLetter" class="hidden">
+  <details class="envelope">
+    <summary>
+      <div class="envelope-heart">❤️</div>
+      <p>Tap to open your letter</p>
+    </summary>
 
-<div class="letter-paper">
-<h2>From 2018 to You, Baby ❤️</h2>
+    <div class="letter-paper">
+      <h2>From 2018 to You, Baby ❤️</h2>
 
-<p>May 10, 2018. I saw you on Instagram, liked you, saw your post and finally sent you a message. You were friendly, and I had no idea what would happen next.</p>
+      <p>May 10, 2018. I saw you on Instagram, liked you, saw your post and finally sent you a message. You were friendly, and I had no idea what would happen next.</p>
 
-<p>On April 11, 2018, I proposed again. I told you that if you didn't accept, I would fade away and never text you again.</p>
+      <p>On April 11, 2018, I proposed again. I told you that if you didn't accept, I would fade away and never text you again.</p>
 
-<p>Then came 2022. We finally met, and our story became something we could experience beyond a screen.</p>
+      <p>Then came 2022. We finally met, and our story became something we could experience beyond a screen.</p>
 
-<p>We have shared moments that will always stay between us. Some memories are difficult to explain, but they mean a lot to me.</p>
+      <p>We have shared moments that will always stay between us. Some memories are difficult to explain, but they mean a lot to me.</p>
 
-<p>We've had our imperfect days, but every chapter has become part of our story.</p>
+      <p>We've had our imperfect days, but every chapter has become part of our story.</p>
 
-<p>From that first Instagram message to this birthday letter, it's been our story.</p>
+      <p>From that first Instagram message to this birthday letter, it's been our story.</p>
 
-<h3>With love, Muhaz ❤️</h3>
+      <h3>With love, Muhaz ❤️</h3>
+    </div>
+  </details>
 </div>
-</details>
 </section>
 
 <style>
@@ -294,23 +296,42 @@ font-style:italic;
 <script>
 const birthday = new Date("2027-01-01T00:00:00+05:30").getTime();
 function update(){
- const now=Date.now(),distance=birthday-now;
- if(distance<=0){
-  document.getElementById("locked").classList.add("hidden");
-  document.getElementById("birthday").classList.remove("hidden");
-  return;
- }
- const d=Math.floor(distance/86400000);
- const h=Math.floor(distance%86400000/3600000);
- const m=Math.floor(distance%3600000/60000);
- const s=Math.floor(distance%60000/1000);
- document.getElementById("countdown").textContent=d+" days "+h+" hours "+m+" minutes "+s+" seconds";
+  const now = Date.now();
+  const distance = birthday - now;
+
+  if(distance <= 0){
+    document.getElementById("locked").classList.add("hidden");
+    document.getElementById("birthday").classList.remove("hidden");
+
+    // Unlock the personal birthday letter
+    document.getElementById("birthdayLetter").classList.remove("hidden");
+
+    return;
+  }
+
+  const d = Math.floor(distance / 86400000);
+  const h = Math.floor(distance % 86400000 / 3600000);
+  const m = Math.floor(distance % 3600000 / 60000);
+  const s = Math.floor(distance % 60000 / 1000);
+
+  document.getElementById("countdown").textContent = d + " days " + h + " hours " + m + " minutes " + s + " seconds";
 }
-update();setInterval(update,1000);document.querySelectorAll('.gallery img:not(#fullPhoto)').forEach(photo=>{
+
+update();
+setInterval(update,1000);
+
+document.querySelectorAll('.gallery img:not(#fullPhoto)').forEach(photo=>{
   photo.addEventListener('click',()=>{
     document.getElementById('fullPhoto').src=photo.src;
     document.getElementById('photoViewer').style.display='flex';
-  });function createPetal(){
+  });
+});
+
+document.getElementById('fullPhoto').addEventListener('click',event=>{
+  event.stopPropagation();
+});
+
+function createPetal(){
   const petal=document.createElement("div");
   petal.className="petal";
   petal.innerHTML="🌹";
@@ -319,14 +340,8 @@ update();setInterval(update,1000);document.querySelectorAll('.gallery img:not(#f
   petal.style.animationDuration=(5+Math.random()*5)+"s";
 
   document.body.appendChild(petal);
-
   setTimeout(()=>petal.remove(),10000);
 }
 
 setInterval(createPetal,800);
-});
-document.getElementById('fullPhoto').addEventListener('click',event=>event.stopPropagation());
 </script>
-</body>
-</html>
-
