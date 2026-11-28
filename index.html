@@ -4,872 +4,552 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#fff0f3">
+<meta name="theme-color" content="#fff1f4">
 <title>A Little World for Baby ❤️</title>
 
 <style>
 *{box-sizing:border-box}
-
+html{scroll-behavior:smooth}
 body{
-margin:0;
-background:#fff0f3;
-color:#613b48;
-font-family:Georgia,serif;
-text-align:center;
+  margin:0;
+  font-family:Georgia,'Times New Roman',serif;
+  background:#fff5f6;
+  color:#573d43;
+  text-align:center;
 }
-
-h1{
-font-size:clamp(35px,9vw,55px);
-color:#a34865;
-margin:15px 0;
-}
-
-h2{color:#a34865}
-p{line-height:1.8}
-
-section{
-padding:35px 20px;
-max-width:850px;
-margin:auto;
-}
-
-.card{
-background:#fffaf7;
-padding:25px;
-border-radius:20px;
-margin:18px auto;
-box-shadow:0 5px 20px #a3486515;
-}
-
-button{
-border:0;
-background:#a34865;
-color:white;
-padding:14px 24px;
-border-radius:30px;
-font-size:16px;
-cursor:pointer;
-font-family:Georgia,serif;
-}
-
-button:active{transform:scale(.97)}
-
 .hidden{display:none!important}
-
+button{
+  border:0;
+  border-radius:30px;
+  padding:13px 25px;
+  background:#bd7185;
+  color:white;
+  font-size:15px;
+  cursor:pointer;
+  box-shadow:0 5px 16px #bd718533;
+}
+button:active{transform:scale(.97)}
+h1,h2{font-weight:normal}
+p{line-height:1.7}
+section{padding:55px 18px}
 #locked{
-min-height:90vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-padding:25px;
-background:linear-gradient(145deg,#f8cbd5,#fff0f3);
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:25px;
+  background:linear-gradient(145deg,#fff0f3,#f8dce4);
 }
-
-#countdown{
-font-size:clamp(20px,5vw,27px);
-color:#a34865;
-margin:20px 0;
-}
-
-/* Welcome screen */
-
-#welcomeScreen{
-min-height:90vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-padding:30px 22px;
-background:linear-gradient(145deg,#f8cbd5,#fff0f3,#fce4eb);
-}
-
-.welcome-heart{
-font-size:65px;
-animation:pulse 1.8s infinite;
-}
-
-#welcomeScreen button{
-margin-top:20px;
-padding:17px 30px;
-font-size:17px;
-}
-
-/* Romantic slideshow */
-
+.heart{font-size:55px;animation:heartbeat 1.5s infinite}
+@keyframes heartbeat{50%{transform:scale(1.15)}}
+#countdown{font-size:25px;color:#a4546b;margin:20px}
+#countdown small{font-size:13px}
 #movieScreen{
-min-height:100vh;
-background:#1d1018;
-color:#fff0f3;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-padding:25px 15px;
+  min-height:100vh;
+  background:#160e15;
+  color:white;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:22px 14px;
 }
-
-#movieScreen h2{color:#ffd5e0}
-
-#slideshowFrame{
-width:100%;
-max-width:650px;
-height:min(65vh,570px);
-min-height:300px;
-position:relative;
-overflow:hidden;
-border-radius:15px;
-background:#301c27;
-box-shadow:0 10px 40px #0008;
+.movie-heading{font-size:14px;letter-spacing:4px;color:#e9b9c7}
+.movie-frame{
+  width:100%;
+  max-width:440px;
+  position:relative;
+  overflow:hidden;
+  border-radius:18px;
+  background:#241820;
+  box-shadow:0 15px 50px #0008;
 }
-
-#slidePhoto{
-width:100%;
-height:100%;
-object-fit:contain;
-opacity:1;
-transition:opacity 1.1s ease,transform 5s ease;
+.movie-frame img{
+  width:100%;
+  height:min(65vh,590px);
+  object-fit:cover;
+  display:block;
+  opacity:1;
+  transition:opacity .65s ease;
 }
-
-#slidePhoto.fade{
-opacity:0;
+.movie-frame img.fade{opacity:0}
+.photo-caption{
+  position:absolute;
+  left:0;right:0;bottom:0;
+  padding:55px 20px 25px;
+  background:linear-gradient(transparent,#130b12eF);
+  color:#fff;
+  font-size:clamp(19px,5vw,25px);
+  line-height:1.45;
+  text-shadow:0 2px 8px #000;
+  opacity:1;
+  transition:opacity .5s ease,transform .5s ease;
 }
-
-#slidePhoto.zoom{
-transform:scale(1.07);
+.photo-caption.fade{opacity:0;transform:translateY(12px)}
+.movie-progress{
+  width:100%;
+  max-width:440px;
+  height:3px;
+  background:#ffffff35;
+  margin:18px 0;
+  border-radius:5px;
+  overflow:hidden;
 }
-
-#movieInstructions{
-font-size:15px;
-color:#ffe0e9;
-margin:18px 0 5px;
+#progressFill{height:100%;width:0;background:#f3b6c8}
+#movieStatus{font-size:13px;color:#e7cbd4;min-height:20px}
+.movie-controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:12px}
+.movie-controls button{background:#a75c73}
+#continueButton{background:#e3a6b8;color:#351d26;margin-top:15px}
+#birthday{
+  background:linear-gradient(#fff4f6,#fffafa);
 }
-
-#movieStatus{
-font-size:14px;
-color:#e9b9ca;
+.hero{
+  padding:65px 20px 35px;
+  background:linear-gradient(145deg,#f7dce4,#fff1f4);
 }
-
-#movieControls{
-display:flex;
-gap:12px;
-justify-content:center;
-flex-wrap:wrap;
-margin-top:15px;
-}
-
-#movieControls button{
-background:#a34865;
-}
-
-#movieProgress{
-width:100%;
-max-width:500px;
-height:5px;
-background:#63404f;
-border-radius:10px;
-margin-top:20px;
-overflow:hidden;
-}
-
-#movieProgressFill{
-height:100%;
-width:0%;
-background:#ffb6cc;
-transition:width .3s linear;
-}
-
-#finishMessage{
-margin-top:25px;
-padding:25px;
-background:#39212e;
-border-radius:18px;
-width:100%;
-max-width:550px;
-animation:fadeIn 1s ease;
-}
-
-#finishMessage h2{color:#ffd5e0}
-
-/* Gallery */
-
+.hero h1{font-size:clamp(34px,8vw,48px);color:#a6536c}
+.hero p{font-size:17px}
 .gallery{
-display:grid;
-grid-template-columns:repeat(2,minmax(0,1fr));
-gap:22px 14px;
-padding:12px 4px;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  max-width:850px;
+  margin:25px auto;
 }
-
 .gallery img{
-width:100%;
-height:210px;
-object-fit:cover;
-background:#fffaf2;
-padding:9px 9px 28px;
-border:1px solid #eadbc8;
-border-radius:3px;
-box-shadow:0 5px 14px rgba(90,55,55,.16);
-transform:rotate(-2deg);
-transition:transform .3s ease,box-shadow .3s ease;
+  width:100%;
+  height:230px;
+  object-fit:cover;
+  border-radius:13px;
+  box-shadow:0 5px 18px #9e66701c;
+  cursor:pointer;
 }
-
-.gallery img:nth-child(even){transform:rotate(2deg)}
-
-.gallery img:active{
-transform:scale(1.04) rotate(0deg);
-box-shadow:0 8px 20px rgba(90,55,55,.25);
+@media(min-width:650px){
+  .gallery{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .gallery img{height:280px}
 }
-
+.card{
+  max-width:650px;
+  margin:22px auto;
+  padding:28px 22px;
+  background:#fff;
+  border-radius:18px;
+  box-shadow:0 7px 25px #a85c7015;
+}
+.note{
+  background:#fff9f0;
+  border:1px solid #f0dfc8;
+  padding:20px;
+  margin:13px auto;
+  max-width:540px;
+  border-radius:8px;
+  font-style:italic;
+}
 #photoViewer{
-display:none;
-position:fixed;
-inset:0;
-z-index:9999;
-background:rgba(35,15,25,.94);
-align-items:center;
-justify-content:center;
-padding:15px;
+  position:fixed;
+  inset:0;
+  z-index:20;
+  background:#000e;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  padding:15px;
 }
-
 #photoViewer img{
-max-width:95%;
-max-height:85vh;
-object-fit:contain;
-border:8px solid #fffaf2;
-box-shadow:0 10px 40px #0008;
+  max-width:100%;
+  max-height:85vh;
+  object-fit:contain;
+  border-radius:12px;
 }
-
-/* Music player */
-
-.music-player{
-background:#fff0f4;
-padding:25px;
-border-radius:22px;
+#closeViewer{
+  position:absolute;
+  top:20px;right:20px;
+  background:#ffffff33;
 }
-
-.heart-button{
-width:75px;
-height:75px;
-border-radius:50%;
-background:#b44869;
-color:white;
-font-size:35px;
-}
-
-/* Love notes */
-
-.note{margin:12px 0}
-
-/* Cake */
-
-#birthdayCake{
-text-align:center;
-padding:25px;
-}
-
-.cake-icon{
-font-size:75px;
-animation:bounce 1s infinite;
-}
-
-/* Gift */
-
+#cake{font-size:75px;margin:15px}
 #giftBox{
-display:inline-block;
-font-size:90px;
-cursor:pointer;
-transition:transform .4s ease;
+  font-size:75px;
+  cursor:pointer;
+  display:inline-block;
+  transition:transform .3s;
 }
-
-#giftBox.opened{
-transform:scale(1.3) rotate(10deg);
+#giftBox:active{transform:scale(1.15)}
+#giftMessage{font-size:20px;color:#a6536c}
+.letter{
+  max-width:650px;
+  margin:25px auto;
+  padding:30px 23px;
+  background:#f7edda;
+  border:1px solid #e2d1ae;
+  box-shadow:0 8px 25px #7a5a351b;
+  color:#58452e;
+  text-align:left;
+  line-height:1.9;
+  border-radius:5px;
 }
-
-#giftMessage{
-animation:fadeIn 1s ease;
+.letter h2{text-align:center}
+footer{padding:30px 15px;color:#a47782;font-size:13px}
+#petals{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:10;
+  overflow:hidden;
 }
-
-/* Letter */
-
-.envelope{
-background:#f8dce5;
-padding:25px;
-border-radius:20px;
-cursor:pointer;
-}
-
-.envelope summary{
-list-style:none;
-text-align:center;
-padding:20px;
-}
-
-.envelope summary::-webkit-details-marker{display:none}
-
-.envelope-heart{
-font-size:65px;
-animation:pulse 1.5s infinite;
-}
-
-.letter-paper{
-background:
-radial-gradient(ellipse at top left,rgba(130,75,35,.16),transparent 45%),
-radial-gradient(ellipse at bottom right,rgba(110,60,25,.2),transparent 45%),
-linear-gradient(135deg,#f3dfb8,#e8d0a2,#f5e5c5);
-color:#563b27;
-padding:30px 24px;
-margin-top:18px;
-border:1px solid #c4a477;
-border-radius:4px;
-box-shadow:0 8px 22px rgba(70,40,20,.25);
-font-family:Georgia,serif;
-line-height:2;
-transform:rotate(-.5deg);
-}
-
-.letter-paper h2,
-.letter-paper h3{
-color:#70452d;
-font-family:Georgia,serif;
-}
-
-/* Rose petals */
-
 .petal{
-position:fixed;
-top:-30px;
-z-index:9998;
-pointer-events:none;
-animation:fall linear forwards;
+  position:absolute;
+  top:-30px;
+  animation:fall linear forwards;
+  opacity:.75;
 }
-
 @keyframes fall{
-to{
-transform:translateY(110vh) rotate(360deg);
-opacity:0;
-}
-}
-
-@keyframes bounce{
-0%,100%{transform:translateY(0)}
-50%{transform:translateY(-12px)}
-}
-
-@keyframes pulse{
-50%{transform:scale(1.15)}
-}
-
-@keyframes fadeIn{
-from{opacity:0;transform:translateY(15px)}
-to{opacity:1;transform:translateY(0)}
-}
-
-footer{
-padding:30px;
-color:#a34865;
-}
-
-@media(max-width:380px){
-.gallery{gap:16px 10px}
-.gallery img{height:175px}
+  to{transform:translateY(110vh) rotate(500deg);opacity:0}
 }
 </style>
 </head>
 
 <body>
 
-<!-- BIRTHDAY COUNTDOWN -->
-
 <div id="locked">
-<p>❤️ A little surprise is waiting for you ❤️</p>
-<h1>For My Baby</h1>
-<p>Your special world opens on your birthday.</p>
-<div id="countdown">Loading...</div>
-<p>Until then, keep smiling, beautiful.</p>
+  <div class="heart">❤️</div>
+  <h1>A Little World for Baby</h1>
+  <p>Something beautiful is waiting for you...</p>
+  <div id="countdown">Loading...</div>
+  <p>Come back when the clock reaches your special day.</p>
 </div>
-
-<!-- WELCOME SCREEN -->
 
 <div id="welcomeScreen" class="hidden">
-<div class="welcome-heart">❤️</div>
-<h1>Something Special For You</h1>
-<p>Baby, I made this little world just for you.</p>
-<p>Find a comfortable place, turn up your volume and get ready.</p>
-<p>Your surprise begins with our song. 🎶</p>
-<button id="beginButton">Begin My Surprise ❤️</button>
-<p style="font-size:13px">Tap the button once to begin the music and memories.</p>
+  <div class="hero">
+    <div class="heart">💗</div>
+    <h1>Happy Birthday, Baby</h1>
+    <p>I made a little world just for you.</p>
+    <p>Before you enter, there's something I want you to see.</p>
+    <button id="beginButton">Begin our little movie ❤️</button>
+    <p style="font-size:12px">Find a quiet moment, turn your sound on, and enjoy.</p>
+  </div>
 </div>
-
-<!-- CINEMATIC SONG SLIDESHOW -->
 
 <div id="movieScreen" class="hidden">
+  <p class="movie-heading">A LITTLE MOVIE FOR BABY</p>
+  <h2 style="font-weight:normal">Every picture holds a piece of us</h2>
 
-<h2>Just You, Me & Our Memories ❤️</h2>
+  <div class="movie-frame">
+    <img id="moviePhoto" src="assets/photos/photo-01.jpg" alt="A special memory">
+    <div id="photoCaption" class="photo-caption">
+      Some stories begin without us knowing how beautiful they'll become.
+    </div>
+  </div>
 
-<div id="slideshowFrame">
-<img id="slidePhoto" src="assets/photos/photo-01.jpg" alt="Our memories together">
+  <div class="movie-progress">
+    <div id="progressFill"></div>
+  </div>
+
+  <div id="movieStatus">Your little movie is ready ❤️</div>
+
+  <div class="movie-controls">
+    <button id="pauseButton">Pause music</button>
+  </div>
+
+  <p style="font-size:12px;color:#c9aeb8;max-width:360px">
+    Let the song play and enjoy each memory. You can pause it whenever you like.
+  </p>
+
+  <button id="continueButton" class="hidden">Continue to your birthday surprise ❤️</button>
 </div>
 
-<p id="movieInstructions">
-Our song is playing. Sit back, relax and enjoy our memories.
-</p>
-
-<p id="movieStatus">
-Please wait until the song ends. ❤️
-</p>
-
-<div id="movieProgress">
-<div id="movieProgressFill"></div>
-</div>
-
-<div id="movieControls">
-<button id="pauseMovieButton">Pause Music ♡</button>
-</div>
-
-<div id="finishMessage" class="hidden">
-<h2>Our song has ended, Baby ❤️</h2>
-<p>I hope you enjoyed our little memory movie.</p>
-<p>There's still more waiting for you.</p>
-<button id="continueButton">Continue to Your Birthday Surprise ❤️</button>
-</div>
-
-<audio id="ourSong" preload="metadata">
-<source src="assets/photos/our-song.mp3" type="audio/mpeg">
+<audio id="ourSong" preload="auto">
+  <source src="assets/photos/our-song.mp3" type="audio/mpeg">
 </audio>
 
+<main id="birthday" class="hidden">
+
+  <header class="hero">
+    <div class="heart">❤️</div>
+    <h1>Happy Birthday, Baby!</h1>
+    <p>Welcome to your little world, made with all my love.</p>
+    <p>Today, every little thing here is for you.</p>
+  </header>
+
+  <section>
+    <h2>Our Little Memories 📸</h2>
+    <p>Every picture has a story. Every story has you in it.</p>
+    <div class="gallery" id="gallery"></div>
+  </section>
+
+  <section>
+    <h2>Little Things I Want You to Know 💌</h2>
+    <div class="note">You became a beautiful part of my life in a way I never expected.</div>
+    <div class="note">Even on ordinary days, you give me something special to smile about.</div>
+    <div class="note">I don't need every moment to be perfect. I just want the real moments with you.</div>
+    <div class="note">Thank you for all the memories we've made and all the ones still waiting for us.</div>
+    <div class="note">If I had to choose again, I'd still want to know your story.</div>
+  </section>
+
+  <section>
+    <div class="card">
+      <h2>A Little Birthday Wish 🎂</h2>
+      <div id="cake">🎂</div>
+      <p>Close your eyes, make a wish, and tap the button.</p>
+      <button id="wishButton">Make your wish ✨</button>
+      <p id="wishMessage" class="hidden">May life give you more beautiful moments than you can count. ❤️</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="card">
+      <h2>A Little Gift for You 🎁</h2>
+      <p>There's a little surprise waiting. Tap the gift.</p>
+      <div id="giftBox" role="button" aria-label="Open gift">🎁</div>
+      <p id="giftMessage" class="hidden">With love, Muhaz ❤️<br>A little gift for the girl who means so much to me.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>One Last Little Note 💗</h2>
+    <div class="letter">
+      <h2>To My Baby ❤️</h2>
+      <p>Hey Baby,</p>
+      <p>
+        I still remember seeing you on Instagram and finding a reason to send
+        that first message. I didn't know where a simple hello would lead us.
+      </p>
+      <p>
+        Life has given us different moments, memories, smiles and lessons.
+        And through all of it, you've remained someone very special to me.
+      </p>
+      <p>
+        I may not always find the perfect words, but I hope you never doubt
+        that you matter to me. I hope this little world makes you smile and
+        reminds you how much love went into making it.
+      </p>
+      <p>
+        I wish you happiness, peace, good health and everything your heart
+        quietly hopes for. Keep being you.
+      </p>
+      <p>Happy Birthday, Baby. ❤️</p>
+      <p style="text-align:right">With all my love,<br><strong>Muhaz ❤️</strong></p>
+    </div>
+  </section>
+
+  <footer>
+    Made with love, just for Baby ❤️<br>
+    A Little World for Baby
+  </footer>
+</main>
+
+<div id="photoViewer">
+  <button id="closeViewer">✕</button>
+  <img id="viewerImage" src="" alt="Memory enlarged">
 </div>
 
-<!-- ALL BIRTHDAY CONTENT AFTER THE SONG -->
-
-<div id="birthday" class="hidden">
-
-<header style="padding:55px 18px;background:linear-gradient(140deg,#f8cbd5,#fff0f3)">
-<p>A special day for someone special</p>
-<h1>Happy Birthday, Baby ❤️</h1>
-<p>Welcome to our little world.</p>
-</header>
-
-<section>
-<h2>Our Memories 📸</h2>
-<p>Every picture holds a little piece of our story.</p>
-
-<div class="gallery">
-<img src="assets/photos/photo-01.jpg" alt="Our memory 1">
-<img src="assets/photos/photo-02.jpg" alt="Our memory 2">
-<img src="assets/photos/photo-03.jpg" alt="Our memory 3">
-<img src="assets/photos/photo-04.jpg" alt="Our memory 4">
-<img src="assets/photos/photo-05.jpg" alt="Our memory 5">
-<img src="assets/photos/photo-06.jpg" alt="Our memory 6">
-<img src="assets/photos/photo-07.jpg" alt="Our memory 7">
-<img src="assets/photos/photo-08.jpg" alt="Our memory 8">
-<img src="assets/photos/photo-09.jpg" alt="Our memory 9">
-<img src="assets/photos/photo-10.jpg" alt="Our memory 10">
-<img src="assets/photos/photo-11.jpg" alt="Our memory 11">
-<img src="assets/photos/photo-12.jpg" alt="Our memory 12">
-<img src="assets/photos/photo-13.jpg" alt="Our memory 13">
-<img src="assets/photos/photo-14.jpg" alt="Our memory 14">
-<img src="assets/photos/photo-15.jpg" alt="Our memory 15">
-</div>
-</section>
-
-<div id="photoViewer" onclick="this.style.display='none'">
-<img id="fullPhoto" src="" alt="Our memory">
-</div>
-
-<section class="card">
-<h2>Our Song ♡</h2>
-<p>Every heartbeat reminds me of you.</p>
-<div class="music-player">
-<button id="playSong" class="heart-button">♡</button>
-<p id="musicStatus">Made for my Baby ❤️</p>
-</div>
-</section>
-
-<section>
-<h2>Five Little Love Notes 💌</h2>
-
-<div class="card note">
-<h3>The Beginning</h3>
-<p>I still remember May 10, 2018. One Instagram message, and I had no idea you would become such a big part of my life.</p>
-</div>
-
-<div class="card note">
-<h3>The Girl I Chose</h3>
-<p>You weren't just someone I liked on Instagram. You became someone I wanted to know, understand and build memories with.</p>
-</div>
-
-<div class="card note">
-<h3>Our First Meeting</h3>
-<p>2022 gave our story a new chapter. We finally met, and our memories became more than words on a screen.</p>
-</div>
-
-<div class="card note">
-<h3>Our Little World</h3>
-<p>From our conversations to our private moments, there are memories that only you and I will fully understand.</p>
-</div>
-
-<div class="card note">
-<h3>Still Choosing You</h3>
-<p>We've come a long way from that first message. I hope we keep making memories worth looking back on.</p>
-</div>
-</section>
-
-<section class="card">
-<h2>Make a Birthday Wish 🎂</h2>
-<p>Close your eyes, make a wish and tap below.</p>
-
-<button id="wishButton">Blow the candles ❤️</button>
-
-<div id="birthdayCake" class="hidden">
-<div class="cake-icon">🎂</div>
-<h2>Make a wish, Baby! ❤️</h2>
-<p>May every beautiful dream of yours come true.</p>
-</div>
-
-<p id="wish" class="hidden">May all your beautiful wishes come true, Baby! ❤️</p>
-</section>
-
-<section class="card">
-<h2>A Little Gift For You 🎁</h2>
-
-<div id="giftBox">🎁</div>
-
-<p style="font-size:14px">Tap the gift to open your surprise ❤️</p>
-
-<div id="giftMessage" class="hidden">
-<h3>To My Beautiful Baby ❤️</h3>
-<p>If I could give you one gift that lasts forever, I'd give you the ability to see yourself through my eyes. Maybe then you'd understand how special you are to me. You deserve beautiful things, not just today, but every day. Happy Birthday, my Baby. ❤️</p>
-</div>
-</section>
-
-<section class="card love-letter">
-<h2>A Letter For You 💌</h2>
-<p>There's something special waiting inside...</p>
-
-<details class="envelope">
-<summary>
-<div class="envelope-heart">❤️</div>
-<p>Tap to open your letter</p>
-</summary>
-
-<div class="letter-paper">
-<h2>From 2018 to You, Baby ❤️</h2>
-
-<p>May 10, 2018. I saw you on Instagram, liked you, saw your post and finally sent you a message. You were friendly, and I had no idea what would happen next.</p>
-
-<p>On April 11, 2018, I proposed again. I told you that if you didn't accept, I would fade away and never text you again.</p>
-
-<p>Then came 2022. We finally met, and our story became something we could experience beyond a screen.</p>
-
-<p>We have shared moments that will always stay between us. Some memories are difficult to explain, but they mean a lot to me.</p>
-
-<p>We've had our imperfect days, but every chapter has become part of our story.</p>
-
-<p>From that first Instagram message to this birthday letter, it's been our story.</p>
-
-<h3>With love, Muhaz ❤️</h3>
-</div>
-</details>
-</section>
-
-</div>
-
-<footer>Made with love, just for Baby ❤️</footer>
+<div id="petals"></div>
 
 <script>
-
-/* COUNTDOWN */
-
-const birthdayDate = new Date("2026-01-01T00:00:00+05:30").getTime();
-
-const lockedScreen = document.getElementById("locked");
-const welcomeScreen = document.getElementById("welcomeScreen");
-const movieScreen = document.getElementById("movieScreen");
-const birthdayScreen = document.getElementById("birthday");
-
-function updateCountdown(){
-
-const distance = birthdayDate - Date.now();
-
-if(distance <= 0){
-
-lockedScreen.classList.add("hidden");
-welcomeScreen.classList.remove("hidden");
-
-return;
-}
-
-const d = Math.floor(distance / 86400000);
-const h = Math.floor(distance % 86400000 / 3600000);
-const m = Math.floor(distance % 3600000 / 60000);
-const s = Math.floor(distance % 60000 / 1000);
-
-document.getElementById("countdown").textContent =
-d + " days " + h + " hours " + m + " minutes " + s + " seconds";
-
-}
-
-updateCountdown();
-setInterval(updateCountdown,1000);
-
-
-/* SONG AND SLIDESHOW */
-
-const song = document.getElementById("ourSong");
-const beginButton = document.getElementById("beginButton");
-const slidePhoto = document.getElementById("slidePhoto");
-const movieStatus = document.getElementById("movieStatus");
-const movieProgressFill = document.getElementById("movieProgressFill");
-const pauseMovieButton = document.getElementById("pauseMovieButton");
-const finishMessage = document.getElementById("finishMessage");
-
-const photos = [];
-
-for(let i=1;i<=15;i++){
-photos.push("assets/photos/photo-" + String(i).padStart(2,"0") + ".jpg");
-}
-
-let currentSlide = -1;
-let songFinished = false;
-
-function showSlide(index){
-
-if(index === currentSlide) return;
-
-currentSlide = index;
-
-slidePhoto.classList.add("fade");
-
-setTimeout(()=>{
-
-slidePhoto.src = photos[index];
-slidePhoto.classList.remove("fade");
-slidePhoto.classList.add("zoom");
-
-setTimeout(()=>{
-slidePhoto.classList.remove("zoom");
-},5000);
-
-},450);
-
-}
-
-function updateSlideshow(){
-
-if(!song.duration || !isFinite(song.duration)) return;
-
-const progress = song.currentTime / song.duration;
-
-movieProgressFill.style.width = (progress * 100) + "%";
-
-const index = Math.min(
-photos.length - 1,
-Math.floor(progress * photos.length)
+const photos = Array.from({length:15}, (_,i) =>
+  `assets/photos/photo-${String(i+1).padStart(2,"0")}.jpg`
 );
 
-showSlide(index);
+const captions = [
+  "Some stories begin without us knowing how beautiful they'll become.",
+  "I never knew one little message could become such a big part of my life.",
+  "Some people arrive quietly and change the meaning of ordinary days.",
+  "If I could keep one feeling forever, it would be the happiness of being close to you.",
+  "Even the simplest moments become memories when they have you in them.",
+  "I wish I could show you how beautiful you look through my eyes.",
+  "The world keeps moving, but some moments deserve to stay still.",
+  "You make my favourite memories feel like home.",
+  "I don't need a perfect story. I just love the one we're writing.",
+  "Some smiles stay in our hearts long after the moment has passed.",
+  "If time could pause, I'd save a few more moments with you.",
+  "No matter how many pictures we take, they can never hold every feeling.",
+  "I hope we keep finding new reasons to laugh together.",
+  "There are a thousand things I could say, but one thing stays simple: you matter.",
+  "And if our story has more pages waiting, I hope they're filled with beautiful days."
+];
 
+const locked = document.getElementById("locked");
+const welcomeScreen = document.getElementById("welcomeScreen");
+const movieScreen = document.getElementById("movieScreen");
+const birthday = document.getElementById("birthday");
+const countdown = document.getElementById("countdown");
+
+const targetDate = new Date("2026-01-01T00:00:00+05:30").getTime();
+
+function checkBirthday(){
+  const now = Date.now();
+  const remaining = targetDate - now;
+
+  if(remaining <= 0){
+    locked.classList.add("hidden");
+    welcomeScreen.classList.remove("hidden");
+    return;
+  }
+
+  const days = Math.floor(remaining / 86400000);
+  const hours = Math.floor((remaining % 86400000) / 3600000);
+  const minutes = Math.floor((remaining % 3600000) / 60000);
+  const seconds = Math.floor((remaining % 60000) / 1000);
+
+  countdown.innerHTML =
+    `${days} days<br>${hours} hours : ${minutes} minutes : ${seconds} seconds`;
 }
 
-beginButton.addEventListener("click",async()=>{
+checkBirthday();
+setInterval(checkBirthday,1000);
 
-welcomeScreen.classList.add("hidden");
-movieScreen.classList.remove("hidden");
+const song = document.getElementById("ourSong");
+const moviePhoto = document.getElementById("moviePhoto");
+const photoCaption = document.getElementById("photoCaption");
+const progressFill = document.getElementById("progressFill");
+const movieStatus = document.getElementById("movieStatus");
+const pauseButton = document.getElementById("pauseButton");
+const continueButton = document.getElementById("continueButton");
 
-showSlide(0);
+let currentSlide = -1;
+let movieFinished = false;
 
-movieStatus.textContent = "Starting our song... ❤️";
+function showSlide(index){
+  if(index === currentSlide) return;
+  currentSlide = index;
 
-try{
+  moviePhoto.classList.add("fade");
+  photoCaption.classList.add("fade");
 
-await song.play();
+  setTimeout(() => {
+    moviePhoto.src = photos[index];
+    photoCaption.textContent = captions[index];
 
-movieStatus.textContent =
-"Please wait until the song ends. Enjoy our memories ❤️";
-
-pauseMovieButton.textContent = "Pause Music ♡";
-
-}catch(error){
-
-movieStatus.textContent =
-"Music could not start. Check your song file and tap below to try again.";
-
-pauseMovieButton.textContent = "Play Music ♡";
-
+    moviePhoto.classList.remove("fade");
+    photoCaption.classList.remove("fade");
+  },350);
 }
 
-});
+function updateMovie(){
+  if(!Number.isFinite(song.duration) || song.duration <= 0) return;
 
-song.addEventListener("timeupdate",updateSlideshow);
+  const progress = song.currentTime / song.duration;
+  const slideIndex = Math.min(14, Math.floor(progress * 15));
 
-song.addEventListener("play",()=>{
-pauseMovieButton.textContent = "Pause Music ♡";
-});
-
-song.addEventListener("pause",()=>{
-
-if(!songFinished){
-pauseMovieButton.textContent = "Play Music ♡";
-movieStatus.textContent = "Music paused. Tap Play Music to continue ❤️";
+  showSlide(slideIndex);
+  progressFill.style.width = `${Math.min(100,progress*100)}%`;
 }
 
+document.getElementById("beginButton").addEventListener("click", async () => {
+  welcomeScreen.classList.add("hidden");
+  movieScreen.classList.remove("hidden");
+  showSlide(0);
+
+  movieStatus.textContent = "Starting your song... ❤️";
+
+  try{
+    await song.play();
+    movieStatus.textContent = "Playing your little movie ❤️";
+    pauseButton.textContent = "Pause music";
+  }catch(error){
+    movieStatus.textContent = "Tap Play music to start your song.";
+    pauseButton.textContent = "Play music";
+  }
 });
 
-pauseMovieButton.addEventListener("click",async()=>{
+pauseButton.addEventListener("click", async () => {
+  if(song.paused){
+    try{
+      await song.play();
+      movieStatus.textContent = "Playing your little movie ❤️";
+      pauseButton.textContent = "Pause music";
+    }catch(error){
+      movieStatus.textContent = "Your song couldn't start. Please try again.";
+    }
+  }else{
+    song.pause();
+    movieStatus.textContent = "Music paused. Take your time ❤️";
+    pauseButton.textContent = "Play music";
+  }
+});
 
-if(song.paused){
+song.addEventListener("timeupdate", updateMovie);
 
-try{
-await song.play();
-}catch(error){
-movieStatus.textContent = "Music couldn't start. Please check the audio file.";
+song.addEventListener("ended", () => {
+  movieFinished = true;
+  progressFill.style.width = "100%";
+  showSlide(14);
+  movieStatus.textContent = "That's the end of our little movie. ❤️";
+  pauseButton.classList.add("hidden");
+  continueButton.classList.remove("hidden");
+});
+
+continueButton.addEventListener("click", () => {
+  movieScreen.classList.add("hidden");
+  birthday.classList.remove("hidden");
+  window.scrollTo({top:0,behavior:"smooth"});
+  startPetals();
+});
+
+song.addEventListener("error", () => {
+  movieStatus.textContent = "Couldn't load the song. Check that our-song.mp3 is in assets/photos.";
+});
+
+const gallery = document.getElementById("gallery");
+
+photos.forEach((src,index) => {
+  const img = document.createElement("img");
+  img.src = src;
+  img.alt = `Memory ${index+1}`;
+  img.loading = "lazy";
+  img.addEventListener("click", () => openPhoto(src));
+  gallery.appendChild(img);
+});
+
+const photoViewer = document.getElementById("photoViewer");
+const viewerImage = document.getElementById("viewerImage");
+
+function openPhoto(src){
+  viewerImage.src = src;
+  photoViewer.style.display = "flex";
 }
 
-}else{
-
-song.pause();
-
+function closePhoto(){
+  photoViewer.style.display = "none";
+  viewerImage.src = "";
 }
 
+document.getElementById("closeViewer").addEventListener("click",closePhoto);
+photoViewer.addEventListener("click",event => {
+  if(event.target === photoViewer) closePhoto();
 });
 
-song.addEventListener("ended",()=>{
-
-songFinished = true;
-
-movieProgressFill.style.width = "100%";
-pauseMovieButton.classList.add("hidden");
-
-movieStatus.textContent = "Our song has finished ❤️";
-finishMessage.classList.remove("hidden");
-
+document.getElementById("wishButton").addEventListener("click",() => {
+  document.getElementById("wishMessage").classList.remove("hidden");
+  document.getElementById("cake").textContent = "🕯️";
+  document.getElementById("wishButton").textContent = "Wish made ❤️";
 });
 
-song.addEventListener("error",()=>{
-
-movieStatus.textContent =
-"Sorry, the song could not be loaded. Please check that our-song.mp3 is uploaded correctly.";
-
+document.getElementById("giftBox").addEventListener("click",() => {
+  document.getElementById("giftBox").textContent = "💝";
+  document.getElementById("giftMessage").classList.remove("hidden");
 });
 
+let petalsStarted = false;
 
-/* CONTINUE AFTER SONG */
+function startPetals(){
+  if(petalsStarted) return;
+  petalsStarted = true;
 
-document.getElementById("continueButton").addEventListener("click",()=>{
+  const container = document.getElementById("petals");
 
-movieScreen.classList.add("hidden");
-birthdayScreen.classList.remove("hidden");
+  setInterval(() => {
+    const petal = document.createElement("div");
+    petal.className = "petal";
+    petal.textContent = ["🌸","🌷","💗"][Math.floor(Math.random()*3)];
+    petal.style.left = Math.random()*100 + "vw";
+    petal.style.fontSize = (12+Math.random()*15) + "px";
+    petal.style.animationDuration = (5+Math.random()*5) + "s";
 
-window.scrollTo({top:0,behavior:"smooth"});
-
-startRosePetals();
-
-});
-
-
-/* EXTRA SONG PLAYER AFTER THE MOVIE */
-
-const playSongButton = document.getElementById("playSong");
-const musicStatus = document.getElementById("musicStatus");
-
-playSongButton.addEventListener("click",async()=>{
-
-if(song.paused){
-
-try{
-await song.play();
-musicStatus.textContent = "Playing for Baby ❤️";
-playSongButton.textContent = "♥";
-}catch(error){
-musicStatus.textContent = "Please check the song file.";
+    container.appendChild(petal);
+    setTimeout(() => petal.remove(),10000);
+  },700);
 }
-
-}else{
-
-song.pause();
-musicStatus.textContent = "Paused ♡";
-playSongButton.textContent = "♡";
-
-}
-
-});
-
-song.addEventListener("play",()=>{
-playSongButton.textContent = "♥";
-musicStatus.textContent = "Playing for Baby ❤️";
-});
-
-song.addEventListener("pause",()=>{
-playSongButton.textContent = "♡";
-musicStatus.textContent = "Paused ♡";
-});
-
-
-/* PHOTO ENLARGEMENT */
-
-document.querySelectorAll(".gallery img").forEach(photo=>{
-
-photo.addEventListener("click",()=>{
-
-document.getElementById("fullPhoto").src = photo.src;
-document.getElementById("photoViewer").style.display = "flex";
-
-});
-
-});
-
-document.getElementById("fullPhoto").addEventListener("click",event=>{
-event.stopPropagation();
-});
-
-
-/* CAKE SURPRISE */
-
-document.getElementById("wishButton").addEventListener("click",()=>{
-
-document.getElementById("wish").classList.remove("hidden");
-document.getElementById("birthdayCake").classList.remove("hidden");
-
-});
-
-
-/* GIFT SURPRISE */
-
-document.getElementById("giftBox").addEventListener("click",function(){
-
-this.classList.toggle("opened");
-
-document.getElementById("giftMessage").classList.toggle("hidden");
-
-});
-
-
-/* ROSE PETALS */
-
-let petalTimer = null;
-
-function createPetal(){
-
-const petal = document.createElement("div");
-
-petal.className = "petal";
-petal.textContent = "🌹";
-petal.style.left = Math.random() * 100 + "vw";
-petal.style.fontSize = (15 + Math.random() * 15) + "px";
-petal.style.animationDuration = (5 + Math.random() * 5) + "s";
-
-document.body.appendChild(petal);
-
-setTimeout(()=>petal.remove(),10000);
-
-}
-
-function startRosePetals(){
-
-if(petalTimer) return;
-
-petalTimer = setInterval(createPetal,800);
-
-}
-
 </script>
 
 </body>
