@@ -476,12 +476,13 @@ footer{padding:25px;background:#fff0f3;color:#a77b88;font:12px Arial,sans-serif;
   <img id="viewerImage" src="" alt="Expanded memory photo">
 </div>
 <script>
+
 // PHOTO LIST
 const photos = Array.from({length:15}, (_,i) =>
   `assets/photos/photo-${String(i+1).padStart(2,"0")}.jpg`
 );
 
-// ORIGINAL PHOTO CAPTIONS
+// PHOTO CAPTIONS
 const captions = [
   "Some people enter our lives and quietly become our favourite part.",
   "A single smile can become a memory we carry for years.",
@@ -512,6 +513,7 @@ function startMovie(){
   showMoviePhoto();
 
   clearInterval(movieTimer);
+
   movieTimer = setInterval(() => {
     if(movieIndex < photos.length - 1){
       movieIndex++;
@@ -527,6 +529,7 @@ function showMoviePhoto(){
   const caption = document.getElementById("movieCaption");
 
   photo.style.opacity = "0";
+
   setTimeout(() => {
     photo.src = photos[movieIndex];
     caption.textContent = captions[movieIndex];
@@ -537,7 +540,9 @@ function showMoviePhoto(){
 function finishMovie(){
   clearInterval(movieTimer);
   movieTimer = null;
+
   document.getElementById("movieContinue").classList.remove("hidden");
+
   document.getElementById("movieCaption").textContent =
     "These are only a few memories. I hope we make many more together. ❤️";
 }
@@ -545,18 +550,111 @@ function finishMovie(){
 function skipMovie(){
   clearInterval(movieTimer);
   movieTimer = null;
+
   document.getElementById("movieContinue").classList.remove("hidden");
+
   document.getElementById("movieCaption").textContent =
     "Our memories are waiting inside. ❤️";
 }
 
+// THIS WAS THE MISSING FUNCTION
 function openBirthday(){
   clearInterval(movieTimer);
+
   document.getElementById("movieScreen").classList.add("hidden");
   document.getElementById("birthdayPage").classList.remove("hidden");
+
   window.scrollTo({top:0,behavior:"instant"});
+
   startPetals();
 }
+
+// PHOTO GALLERY
+let galleryIndex = 0;
+
+function updateGallery(){
+  document.getElementById("galleryPhoto").src = photos[galleryIndex];
+  document.getElementById("galleryCaption").textContent = captions[galleryIndex];
+
+  document.getElementById("photoCount").textContent =
+    `${galleryIndex+1} / ${photos.length}`;
+}
+
+function changePhoto(direction){
+  galleryIndex = (galleryIndex + direction + photos.length) % photos.length;
+  updateGallery();
+}
+
+// PHOTO VIEWER
+function showPhotoViewer(){
+  const viewer = document.getElementById("photoViewer");
+
+  document.getElementById("viewerImage").src = photos[galleryIndex];
+
+  viewer.style.display = "flex";
+}
+
+function closePhotoViewer(){
+  document.getElementById("photoViewer").style.display = "none";
+}
+
+document.addEventListener("keydown",function(event){
+  if(event.key === "Escape") closePhotoViewer();
+});
+
+// BIRTHDAY WISH
+function makeWish(){
+  document.getElementById("wishText").textContent =
+    "May every little wish in your heart find its way to you. Happy Birthday, Baby! ❤️";
+
+  document.querySelector(".cake").textContent = "🕯️🎂";
+}
+
+// GIFT SURPRISE
+function openGift(){
+  const message = document.getElementById("giftMessage");
+
+  message.classList.toggle("show");
+
+  const gift = document.querySelector(".gift-icon");
+
+  gift.textContent = message.classList.contains("show") ? "💝" : "🎁";
+}
+
+// FLOATING PETALS
+let petalsStarted = false;
+
+function startPetals(){
+  if(petalsStarted) return;
+
+  petalsStarted = true;
+
+  setInterval(() => {
+    const petal = document.createElement("div");
+
+    petal.className = "petal";
+    petal.textContent = Math.random() > 0.5 ? "🌸" : "♥";
+    petal.style.left = Math.random() * 100 + "vw";
+    petal.style.fontSize = (12 + Math.random()*13) + "px";
+    petal.style.animationDuration = (6 + Math.random()*5) + "s";
+
+    document.body.appendChild(petal);
+
+    setTimeout(() => petal.remove(), 12000);
+  }, 900);
+}
+
+// INITIALIZE GALLERY
+updateGallery();
+
+// AUDIO ERROR CHECKS
+document.getElementById("ourSong").addEventListener("error",function(){
+  console.log("Song file not found. Check assets/photos/our-song.mp3");
+});
+
+document.getElementById("babyVoice").addEventListener("error",function(){
+  console.log("Voice file not found. Add assets/photos/baby-voice.mp3");
+});
 
 // PHOTO GALLERY
 let galleryIndex = 0;
