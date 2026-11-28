@@ -37,7 +37,6 @@ p{line-height:1.8}
 .divider{width:65px;height:1px;background:#d9a8b6;margin:25px auto}
 .heart{color:#d887a0}
 
-
 /* Birthday countdown */
 #lockScreen{
   min-height:100vh;display:flex;align-items:center;justify-content:center;
@@ -72,6 +71,7 @@ p{line-height:1.8}
 .movie-photo{
   width:100%;max-height:58vh;object-fit:cover;
   border-radius:18px;box-shadow:0 15px 50px #0008;
+  opacity:1;transition:opacity .45s ease-in-out;will-change:opacity;
 }
 .movie-caption{font-size:20px;line-height:1.7;color:#ffeaf0;min-height:75px}
 .movie-title{color:#f4b7c8;font-size:12px;letter-spacing:4px}
@@ -239,15 +239,11 @@ footer{padding:25px;background:#fff0f3;color:#a77b88;font:12px Arial,sans-serif;
       Some people enter our lives and quietly become our favourite part.
     </p>
     <div class="movie-controls">
-      <button class="btn light" onclick="skipMovie()">Skip movie</button>
       <button class="btn hidden" id="movieContinue" onclick="openBirthday()">Continue ❤️</button>
     </div>
-    <p style="font:12px Arial,sans-serif;color:#c7aeb8">
-      Let the memories play, or skip whenever you like.
-    </p>
   </div>
-  </section>
-  <!-- MAIN BIRTHDAY PAGE -->
+</section>
+<!-- MAIN BIRTHDAY PAGE -->
 <main id="birthdayPage" class="hidden">
 
   <!-- HERO -->
@@ -480,6 +476,7 @@ footer{padding:25px;background:#fff0f3;color:#a77b88;font:12px Arial,sans-serif;
   <button onclick="closePhotoViewer()" aria-label="Close photo">×</button>
   <img id="viewerImage" src="" alt="Expanded memory photo">
 </div>
+
 <!-- AUDIO FILES (controls are intentionally hidden) -->
 <audio id="ourSong" preload="auto">
   <source src="assets/photos/our-song.mp3" type="audio/mpeg">
@@ -487,8 +484,8 @@ footer{padding:25px;background:#fff0f3;color:#a77b88;font:12px Arial,sans-serif;
 <audio id="babyVoice" preload="metadata">
   <source src="assets/photos/baby-voice.mp3" type="audio/mpeg">
 </audio>
+  <script>
 
-<script>
 // BIRTHDAY COUNTDOWN — midnight, January 1, 2026 (India time)
 let countdownTimer = null;
 const birthdayDate = new Date("2026-01-01T00:00:00+05:30").getTime();
@@ -514,7 +511,14 @@ const photos = Array.from({length:15},(_,i) =>
   `assets/photos/photo-${String(i+1).padStart(2,"0")}.jpg`
 );
 
-// PHOTO CAPTIONS
+// Preload the full slideshow so photos are ready before each transition.
+const preloadedPhotos = photos.map(src => {
+  const image = new Image();
+  image.src = src;
+  return image;
+});
+
+// PHOTO CAPTIONS — one unique message for each photo
 const captions = [
   "Some people enter our lives and quietly become our favourite part.",
   "A single smile can become a memory we carry for years.",
@@ -557,18 +561,30 @@ function startMovie(){
     }else{
       finishMovie();
     }
-  },4000);
+  },1000 * 25 / photos.length);
 }
 
 function showMoviePhoto(){
   const photo = document.getElementById("moviePhoto");
   const caption = document.getElementById("movieCaption");
-  photo.style.opacity = "0";
-  setTimeout(() => {
-    photo.src = photos[movieIndex];
-    caption.textContent = captions[movieIndex];
-    photo.style.opacity = "1";
-  },250);
+  const nextImage = preloadedPhotos[movieIndex];
+
+  // Change the photo only when its image is ready; keep its own caption paired with it.
+  const displayPhoto = () => {
+    photo.style.opacity = "0";
+    setTimeout(() => {
+      photo.src = nextImage.src;
+      caption.textContent = captions[movieIndex];
+      photo.style.opacity = "1";
+    }, 220);
+  };
+
+  if(nextImage.complete && nextImage.naturalWidth > 0){
+    displayPhoto();
+  }else{
+    nextImage.onload = displayPhoto;
+    nextImage.onerror = displayPhoto;
+  }
 }
 
 function finishMovie(){
@@ -577,13 +593,6 @@ function finishMovie(){
   document.getElementById("movieContinue").classList.remove("hidden");
   document.getElementById("movieCaption").textContent =
     "These are only a few memories. I hope we make many more together. ❤️";
-}
-
-function skipMovie(){
-  clearInterval(movieTimer);
-  movieTimer = null;
-  document.getElementById("movieContinue").classList.remove("hidden");
-  document.getElementById("movieCaption").textContent = "Our memories are waiting inside. ❤️";
 }
 
 function openBirthday(){
