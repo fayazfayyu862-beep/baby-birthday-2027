@@ -599,8 +599,16 @@ function openBirthday(){
   clearInterval(movieTimer);
   document.getElementById("movieScreen").classList.add("hidden");
   document.getElementById("birthdayPage").classList.remove("hidden");
-  window.scrollTo({top:0,behavior:"instant"});
+
   startPetals();
+
+  setTimeout(() => {
+    document.getElementById("voiceMessage").scrollIntoView({
+      behavior:"smooth",
+      block:"start"
+    });
+  }, 150);
+}
 }
 
 // VOICE MESSAGE BUTTON
