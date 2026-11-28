@@ -4,25 +4,200 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#fff0f3">
 <title>A Little World for Baby ❤️</title>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#fff0f3;color:#613b48;font-family:Georgia,serif;text-align:center}
-header{padding:55px 18px;background:linear-gradient(140deg,#f8cbd5,#fff0f3)}
-h1{font-size:clamp(35px,9vw,55px);color:#a34865;margin:15px 0}
+
+body{
+margin:0;
+background:#fff0f3;
+color:#613b48;
+font-family:Georgia,serif;
+text-align:center;
+}
+
+h1{
+font-size:clamp(35px,9vw,55px);
+color:#a34865;
+margin:15px 0;
+}
+
 h2{color:#a34865}
 p{line-height:1.8}
-section{padding:35px 20px;max-width:850px;margin:auto}
-.card{background:#fffaf7;padding:25px;border-radius:20px;margin:18px auto;box-shadow:0 5px 20px #a3486515}
-button{border:0;background:#a34865;color:white;padding:14px 24px;border-radius:30px;font-size:16px;cursor:pointer}
-#locked{min-height:65vh;display:flex;flex-direction:column;justify-content:center;padding:25px}
-#countdown{font-size:25px;color:#a34865;margin:20px}
+
+section{
+padding:35px 20px;
+max-width:850px;
+margin:auto;
+}
+
+.card{
+background:#fffaf7;
+padding:25px;
+border-radius:20px;
+margin:18px auto;
+box-shadow:0 5px 20px #a3486515;
+}
+
+button{
+border:0;
+background:#a34865;
+color:white;
+padding:14px 24px;
+border-radius:30px;
+font-size:16px;
+cursor:pointer;
+font-family:Georgia,serif;
+}
+
+button:active{transform:scale(.97)}
+
+.hidden{display:none!important}
+
+#locked{
+min-height:90vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+padding:25px;
+background:linear-gradient(145deg,#f8cbd5,#fff0f3);
+}
+
+#countdown{
+font-size:clamp(20px,5vw,27px);
+color:#a34865;
+margin:20px 0;
+}
+
+/* Welcome screen */
+
+#welcomeScreen{
+min-height:90vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+padding:30px 22px;
+background:linear-gradient(145deg,#f8cbd5,#fff0f3,#fce4eb);
+}
+
+.welcome-heart{
+font-size:65px;
+animation:pulse 1.8s infinite;
+}
+
+#welcomeScreen button{
+margin-top:20px;
+padding:17px 30px;
+font-size:17px;
+}
+
+/* Romantic slideshow */
+
+#movieScreen{
+min-height:100vh;
+background:#1d1018;
+color:#fff0f3;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+padding:25px 15px;
+}
+
+#movieScreen h2{color:#ffd5e0}
+
+#slideshowFrame{
+width:100%;
+max-width:650px;
+height:min(65vh,570px);
+min-height:300px;
+position:relative;
+overflow:hidden;
+border-radius:15px;
+background:#301c27;
+box-shadow:0 10px 40px #0008;
+}
+
+#slidePhoto{
+width:100%;
+height:100%;
+object-fit:contain;
+opacity:1;
+transition:opacity 1.1s ease,transform 5s ease;
+}
+
+#slidePhoto.fade{
+opacity:0;
+}
+
+#slidePhoto.zoom{
+transform:scale(1.07);
+}
+
+#movieInstructions{
+font-size:15px;
+color:#ffe0e9;
+margin:18px 0 5px;
+}
+
+#movieStatus{
+font-size:14px;
+color:#e9b9ca;
+}
+
+#movieControls{
+display:flex;
+gap:12px;
+justify-content:center;
+flex-wrap:wrap;
+margin-top:15px;
+}
+
+#movieControls button{
+background:#a34865;
+}
+
+#movieProgress{
+width:100%;
+max-width:500px;
+height:5px;
+background:#63404f;
+border-radius:10px;
+margin-top:20px;
+overflow:hidden;
+}
+
+#movieProgressFill{
+height:100%;
+width:0%;
+background:#ffb6cc;
+transition:width .3s linear;
+}
+
+#finishMessage{
+margin-top:25px;
+padding:25px;
+background:#39212e;
+border-radius:18px;
+width:100%;
+max-width:550px;
+animation:fadeIn 1s ease;
+}
+
+#finishMessage h2{color:#ffd5e0}
+
+/* Gallery */
+
 .gallery{
 display:grid;
 grid-template-columns:repeat(2,minmax(0,1fr));
 gap:22px 14px;
 padding:12px 4px;
 }
+
 .gallery img{
 width:100%;
 height:210px;
@@ -35,11 +210,15 @@ box-shadow:0 5px 14px rgba(90,55,55,.16);
 transform:rotate(-2deg);
 transition:transform .3s ease,box-shadow .3s ease;
 }
+
 .gallery img:nth-child(even){transform:rotate(2deg)}
+
 .gallery img:active{
 transform:scale(1.04) rotate(0deg);
 box-shadow:0 8px 20px rgba(90,55,55,.25);
-}#photoViewer{
+}
+
+#photoViewer{
 display:none;
 position:fixed;
 inset:0;
@@ -57,12 +236,147 @@ object-fit:contain;
 border:8px solid #fffaf2;
 box-shadow:0 10px 40px #0008;
 }
+
+/* Music player */
+
+.music-player{
+background:#fff0f4;
+padding:25px;
+border-radius:22px;
+}
+
+.heart-button{
+width:75px;
+height:75px;
+border-radius:50%;
+background:#b44869;
+color:white;
+font-size:35px;
+}
+
+/* Love notes */
+
 .note{margin:12px 0}
-footer{padding:30px;color:#a34865}
-.hidden{display:none}
+
+/* Cake */
+
+#birthdayCake{
+text-align:center;
+padding:25px;
+}
+
+.cake-icon{
+font-size:75px;
+animation:bounce 1s infinite;
+}
+
+/* Gift */
+
+#giftBox{
+display:inline-block;
+font-size:90px;
+cursor:pointer;
+transition:transform .4s ease;
+}
+
+#giftBox.opened{
+transform:scale(1.3) rotate(10deg);
+}
+
+#giftMessage{
+animation:fadeIn 1s ease;
+}
+
+/* Letter */
+
+.envelope{
+background:#f8dce5;
+padding:25px;
+border-radius:20px;
+cursor:pointer;
+}
+
+.envelope summary{
+list-style:none;
+text-align:center;
+padding:20px;
+}
+
+.envelope summary::-webkit-details-marker{display:none}
+
+.envelope-heart{
+font-size:65px;
+animation:pulse 1.5s infinite;
+}
+
+.letter-paper{
+background:
+radial-gradient(ellipse at top left,rgba(130,75,35,.16),transparent 45%),
+radial-gradient(ellipse at bottom right,rgba(110,60,25,.2),transparent 45%),
+linear-gradient(135deg,#f3dfb8,#e8d0a2,#f5e5c5);
+color:#563b27;
+padding:30px 24px;
+margin-top:18px;
+border:1px solid #c4a477;
+border-radius:4px;
+box-shadow:0 8px 22px rgba(70,40,20,.25);
+font-family:Georgia,serif;
+line-height:2;
+transform:rotate(-.5deg);
+}
+
+.letter-paper h2,
+.letter-paper h3{
+color:#70452d;
+font-family:Georgia,serif;
+}
+
+/* Rose petals */
+
+.petal{
+position:fixed;
+top:-30px;
+z-index:9998;
+pointer-events:none;
+animation:fall linear forwards;
+}
+
+@keyframes fall{
+to{
+transform:translateY(110vh) rotate(360deg);
+opacity:0;
+}
+}
+
+@keyframes bounce{
+0%,100%{transform:translateY(0)}
+50%{transform:translateY(-12px)}
+}
+
+@keyframes pulse{
+50%{transform:scale(1.15)}
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(15px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+footer{
+padding:30px;
+color:#a34865;
+}
+
+@media(max-width:380px){
+.gallery{gap:16px 10px}
+.gallery img{height:175px}
+}
 </style>
 </head>
+
 <body>
+
+<!-- BIRTHDAY COUNTDOWN -->
 
 <div id="locked">
 <p>❤️ A little surprise is waiting for you ❤️</p>
@@ -72,8 +386,62 @@ footer{padding:30px;color:#a34865}
 <p>Until then, keep smiling, beautiful.</p>
 </div>
 
+<!-- WELCOME SCREEN -->
+
+<div id="welcomeScreen" class="hidden">
+<div class="welcome-heart">❤️</div>
+<h1>Something Special For You</h1>
+<p>Baby, I made this little world just for you.</p>
+<p>Find a comfortable place, turn up your volume and get ready.</p>
+<p>Your surprise begins with our song. 🎶</p>
+<button id="beginButton">Begin My Surprise ❤️</button>
+<p style="font-size:13px">Tap the button once to begin the music and memories.</p>
+</div>
+
+<!-- CINEMATIC SONG SLIDESHOW -->
+
+<div id="movieScreen" class="hidden">
+
+<h2>Just You, Me & Our Memories ❤️</h2>
+
+<div id="slideshowFrame">
+<img id="slidePhoto" src="assets/photos/photo-01.jpg" alt="Our memories together">
+</div>
+
+<p id="movieInstructions">
+Our song is playing. Sit back, relax and enjoy our memories.
+</p>
+
+<p id="movieStatus">
+Please wait until the song ends. ❤️
+</p>
+
+<div id="movieProgress">
+<div id="movieProgressFill"></div>
+</div>
+
+<div id="movieControls">
+<button id="pauseMovieButton">Pause Music ♡</button>
+</div>
+
+<div id="finishMessage" class="hidden">
+<h2>Our song has ended, Baby ❤️</h2>
+<p>I hope you enjoyed our little memory movie.</p>
+<p>There's still more waiting for you.</p>
+<button id="continueButton">Continue to Your Birthday Surprise ❤️</button>
+</div>
+
+<audio id="ourSong" preload="metadata">
+<source src="assets/photos/our-song.mp3" type="audio/mpeg">
+</audio>
+
+</div>
+
+<!-- ALL BIRTHDAY CONTENT AFTER THE SONG -->
+
 <div id="birthday" class="hidden">
-<header>
+
+<header style="padding:55px 18px;background:linear-gradient(140deg,#f8cbd5,#fff0f3)">
 <p>A special day for someone special</p>
 <h1>Happy Birthday, Baby ❤️</h1>
 <p>Welcome to our little world.</p>
@@ -82,6 +450,7 @@ footer{padding:30px;color:#a34865}
 <section>
 <h2>Our Memories 📸</h2>
 <p>Every picture holds a little piece of our story.</p>
+
 <div class="gallery">
 <img src="assets/photos/photo-01.jpg" alt="Our memory 1">
 <img src="assets/photos/photo-02.jpg" alt="Our memory 2">
@@ -98,250 +467,410 @@ footer{padding:30px;color:#a34865}
 <img src="assets/photos/photo-13.jpg" alt="Our memory 13">
 <img src="assets/photos/photo-14.jpg" alt="Our memory 14">
 <img src="assets/photos/photo-15.jpg" alt="Our memory 15">
-<div id="photoViewer" onclick="this.style.display='none'">
-<img id="fullPhoto" src="" style="max-width:90%;max-height:85vh;border-radius:12px">
 </div>
 </section>
+
+<div id="photoViewer" onclick="this.style.display='none'">
+<img id="fullPhoto" src="" alt="Our memory">
+</div>
 
 <section class="card">
 <h2>Our Song ♡</h2>
 <p>Every heartbeat reminds me of you.</p>
-
 <div class="music-player">
 <button id="playSong" class="heart-button">♡</button>
 <p id="musicStatus">Made for my Baby ❤️</p>
-<audio id="ourSong" preload="metadata">
-<source src="assets/photos/our-song.mp3" type="audio/mpeg">
-</audio>
 </div>
 </section>
 
-<style>
-.music-player{
-background:#fff0f4;
-padding:25px;
-border-radius:22px;
-}
-.heart-button{
-width:75px;
-height:75px;
-border-radius:50%;
-background:#b44869;
-color:white;
-font-size:35px;
-}
-</style>
-
-<script>
-const song=document.getElementById("ourSong");
-const playButton=document.getElementById("playSong");
-const musicStatus=document.getElementById("musicStatus");
-
-playButton.addEventListener("click",()=>{
-if(song.paused){
-song.play();
-}else{
-song.pause();
-}
-});
-
-song.addEventListener("play",()=>{
-playButton.textContent="♥";
-musicStatus.textContent="Playing for Baby ❤️";
-});
-
-song.addEventListener("pause",()=>{
-playButton.textContent="♡";
-musicStatus.textContent="Paused ♡";
-});
-</script>
-
 <section>
 <h2>Five Little Love Notes 💌</h2>
-<div class="card note"><h3>The Beginning</h3><p>I still remember May 10, 2018. One Instagram message, and I had no idea you would become such a big part of my life.</p></div>
-<div class="card note"><h3>The Girl I Chose</h3><p>You weren't just someone I liked on Instagram. You became someone I wanted to know, understand and build memories with.</p></div>
-<div class="card note"><h3>Our First Meeting</h3><p>2022 gave our story a new chapter. We finally met, and our memories became more than words on a screen.</p></div>
-<div class="card note"><h3>Our Little World</h3><p>From our conversations to our private moments, there are memories that only you and I will fully understand.</p></div>
-<div class="card note"><h3>Still Choosing You</h3><p>We've come a long way from that first message. I hope we keep making memories worth looking back on.</p></div>
+
+<div class="card note">
+<h3>The Beginning</h3>
+<p>I still remember May 10, 2018. One Instagram message, and I had no idea you would become such a big part of my life.</p>
+</div>
+
+<div class="card note">
+<h3>The Girl I Chose</h3>
+<p>You weren't just someone I liked on Instagram. You became someone I wanted to know, understand and build memories with.</p>
+</div>
+
+<div class="card note">
+<h3>Our First Meeting</h3>
+<p>2022 gave our story a new chapter. We finally met, and our memories became more than words on a screen.</p>
+</div>
+
+<div class="card note">
+<h3>Our Little World</h3>
+<p>From our conversations to our private moments, there are memories that only you and I will fully understand.</p>
+</div>
+
+<div class="card note">
+<h3>Still Choosing You</h3>
+<p>We've come a long way from that first message. I hope we keep making memories worth looking back on.</p>
+</div>
 </section>
 
 <section class="card">
 <h2>Make a Birthday Wish 🎂</h2>
 <p>Close your eyes, make a wish and tap below.</p>
-<button onclick="document.getElementById('wish').classList.remove('hidden'); document.getElementById('birthdayCake').classList.remove('hidden')">
-Blow the candles ❤️
-</button><div id="birthdayCake" class="hidden" style="text-align:center;padding:25px;">
-  <div style="font-size:75px;animation:bounce 1s infinite;">🎂</div>
-  <h2 style="color:#b85c75;">Make a wish, Baby! ❤️</h2>
-  <p>May every beautiful dream of yours come true.</p>
+
+<button id="wishButton">Blow the candles ❤️</button>
+
+<div id="birthdayCake" class="hidden">
+<div class="cake-icon">🎂</div>
+<h2>Make a wish, Baby! ❤️</h2>
+<p>May every beautiful dream of yours come true.</p>
 </div>
+
 <p id="wish" class="hidden">May all your beautiful wishes come true, Baby! ❤️</p>
 </section>
 
 <section class="card">
-  <h2>A Little Gift For You 🎁</h2>
+<h2>A Little Gift For You 🎁</h2>
 
-  <div id="giftBox" onclick="this.classList.toggle('opened'); document.getElementById('giftMessage').classList.toggle('hidden')" style="font-size:90px;cursor:pointer;">
-      🎁
-    </div>
+<div id="giftBox">🎁</div>
 
-    <p style="font-size:14px;">Tap the gift to open your surprise ❤️</p>
+<p style="font-size:14px">Tap the gift to open your surprise ❤️</p>
 
-    <div id="giftMessage" class="hidden">
-      <h3>To My Beautiful Baby ❤️</h3>
-      <p>If I could give you one gift that lasts forever, I'd give you the ability to see yourself through my eyes. Maybe then you'd understand how special you are to me. You deserve beautiful things, not just today, but every day. Happy Birthday, my Baby. ❤️</p>
-    </div>
-  </div>
+<div id="giftMessage" class="hidden">
+<h3>To My Beautiful Baby ❤️</h3>
+<p>If I could give you one gift that lasts forever, I'd give you the ability to see yourself through my eyes. Maybe then you'd understand how special you are to me. You deserve beautiful things, not just today, but every day. Happy Birthday, my Baby. ❤️</p>
+</div>
 </section>
 
 <section class="card love-letter">
 <h2>A Letter For You 💌</h2>
 <p>There's something special waiting inside...</p>
 
-<div id="birthdayLetter" class="hidden">
-  <details class="envelope">
-    <summary>
-      <div class="envelope-heart">❤️</div>
-      <p>Tap to open your letter</p>
-    </summary>
+<details class="envelope">
+<summary>
+<div class="envelope-heart">❤️</div>
+<p>Tap to open your letter</p>
+</summary>
 
-    <div class="letter-paper">
-      <h2>From 2018 to You, Baby ❤️</h2>
+<div class="letter-paper">
+<h2>From 2018 to You, Baby ❤️</h2>
 
-      <p>May 10, 2018. I saw you on Instagram, liked you, saw your post and finally sent you a message. You were friendly, and I had no idea what would happen next.</p>
+<p>May 10, 2018. I saw you on Instagram, liked you, saw your post and finally sent you a message. You were friendly, and I had no idea what would happen next.</p>
 
-      <p>On April 11, 2018, I proposed again. I told you that if you didn't accept, I would fade away and never text you again.</p>
+<p>On April 11, 2018, I proposed again. I told you that if you didn't accept, I would fade away and never text you again.</p>
 
-      <p>Then came 2022. We finally met, and our story became something we could experience beyond a screen.</p>
+<p>Then came 2022. We finally met, and our story became something we could experience beyond a screen.</p>
 
-      <p>We have shared moments that will always stay between us. Some memories are difficult to explain, but they mean a lot to me.</p>
+<p>We have shared moments that will always stay between us. Some memories are difficult to explain, but they mean a lot to me.</p>
 
-      <p>We've had our imperfect days, but every chapter has become part of our story.</p>
+<p>We've had our imperfect days, but every chapter has become part of our story.</p>
 
-      <p>From that first Instagram message to this birthday letter, it's been our story.</p>
+<p>From that first Instagram message to this birthday letter, it's been our story.</p>
 
-      <h3>With love, Muhaz ❤️</h3>
-    </div>
-  </details>
+<h3>With love, Muhaz ❤️</h3>
 </div>
+</details>
 </section>
 
-<style>
-.envelope{
-background:#f8dce5;
-padding:25px;
-border-radius:20px;
-cursor:pointer;
-}
-.envelope summary{
-list-style:none;
-text-align:center;
-padding:20px;
-}
-.envelope summary::-webkit-details-marker{
-display:none;
-}
-.envelope-heart{
-font-size:65px;
-animation:pulse 1.5s infinite;
-}
-.letter-paper{
-background:
-radial-gradient(ellipse at top left,rgba(130,75,35,.16),transparent 45%),
-radial-gradient(ellipse at bottom right,rgba(110,60,25,.2),transparent 45%),
-linear-gradient(135deg,#f3dfb8,#e8d0a2,#f5e5c5);
-color:#563b27;
-padding:30px 24px;
-margin-top:18px;
-border:1px solid #c4a477;
-border-radius:4px;
-box-shadow:0 8px 22px rgba(70,40,20,.25);
-font-family:Georgia,serif;
-line-height:2;
-transform:rotate(-.5deg);
-}
-.letter-paper h2,
-.letter-paper h3{
-color:#70452d;
-font-family:Georgia,serif;
-}
-.letter-paper p{
-font-style:italic;
-}@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
- }
-@keyframes pulse{
-50%{transform:scale(1.15)}
-}.petal{
-  position:fixed;
-  top:-30px;
-  z-index:9998;
-  pointer-events:none;
-  animation:fall linear forwards;
-}
-
-@keyframes fall{
-  to{
-    transform:translateY(110vh) rotate(360deg);
-    opacity:0;
-  }
-}
-</style>
-</section>
 </div>
 
 <footer>Made with love, just for Baby ❤️</footer>
 
 <script>
-const birthday = new Date("2027-01-01T00:00:00+05:30").getTime();
-function update(){
-  const now = Date.now();
-  const distance = birthday - now;
 
-  if(distance <= 0){
-    document.getElementById("locked").classList.add("hidden");
-    document.getElementById("birthday").classList.remove("hidden");
+/* COUNTDOWN */
 
-    // Unlock the personal birthday letter
-    document.getElementById("birthdayLetter").classList.remove("hidden");
+const birthdayDate = new Date("2026-01-01T00:00:00+05:30").getTime();
 
-    return;
-  }
+const lockedScreen = document.getElementById("locked");
+const welcomeScreen = document.getElementById("welcomeScreen");
+const movieScreen = document.getElementById("movieScreen");
+const birthdayScreen = document.getElementById("birthday");
 
-  const d = Math.floor(distance / 86400000);
-  const h = Math.floor(distance % 86400000 / 3600000);
-  const m = Math.floor(distance % 3600000 / 60000);
-  const s = Math.floor(distance % 60000 / 1000);
+function updateCountdown(){
 
-  document.getElementById("countdown").textContent = d + " days " + h + " hours " + m + " minutes " + s + " seconds";
+const distance = birthdayDate - Date.now();
+
+if(distance <= 0){
+
+lockedScreen.classList.add("hidden");
+welcomeScreen.classList.remove("hidden");
+
+return;
 }
 
-update();
-setInterval(update,1000);
+const d = Math.floor(distance / 86400000);
+const h = Math.floor(distance % 86400000 / 3600000);
+const m = Math.floor(distance % 3600000 / 60000);
+const s = Math.floor(distance % 60000 / 1000);
 
-document.querySelectorAll('.gallery img:not(#fullPhoto)').forEach(photo=>{
-  photo.addEventListener('click',()=>{
-    document.getElementById('fullPhoto').src=photo.src;
-    document.getElementById('photoViewer').style.display='flex';
-  });
+document.getElementById("countdown").textContent =
+d + " days " + h + " hours " + m + " minutes " + s + " seconds";
+
+}
+
+updateCountdown();
+setInterval(updateCountdown,1000);
+
+
+/* SONG AND SLIDESHOW */
+
+const song = document.getElementById("ourSong");
+const beginButton = document.getElementById("beginButton");
+const slidePhoto = document.getElementById("slidePhoto");
+const movieStatus = document.getElementById("movieStatus");
+const movieProgressFill = document.getElementById("movieProgressFill");
+const pauseMovieButton = document.getElementById("pauseMovieButton");
+const finishMessage = document.getElementById("finishMessage");
+
+const photos = [];
+
+for(let i=1;i<=15;i++){
+photos.push("assets/photos/photo-" + String(i).padStart(2,"0") + ".jpg");
+}
+
+let currentSlide = -1;
+let songFinished = false;
+
+function showSlide(index){
+
+if(index === currentSlide) return;
+
+currentSlide = index;
+
+slidePhoto.classList.add("fade");
+
+setTimeout(()=>{
+
+slidePhoto.src = photos[index];
+slidePhoto.classList.remove("fade");
+slidePhoto.classList.add("zoom");
+
+setTimeout(()=>{
+slidePhoto.classList.remove("zoom");
+},5000);
+
+},450);
+
+}
+
+function updateSlideshow(){
+
+if(!song.duration || !isFinite(song.duration)) return;
+
+const progress = song.currentTime / song.duration;
+
+movieProgressFill.style.width = (progress * 100) + "%";
+
+const index = Math.min(
+photos.length - 1,
+Math.floor(progress * photos.length)
+);
+
+showSlide(index);
+
+}
+
+beginButton.addEventListener("click",async()=>{
+
+welcomeScreen.classList.add("hidden");
+movieScreen.classList.remove("hidden");
+
+showSlide(0);
+
+movieStatus.textContent = "Starting our song... ❤️";
+
+try{
+
+await song.play();
+
+movieStatus.textContent =
+"Please wait until the song ends. Enjoy our memories ❤️";
+
+pauseMovieButton.textContent = "Pause Music ♡";
+
+}catch(error){
+
+movieStatus.textContent =
+"Music could not start. Check your song file and tap below to try again.";
+
+pauseMovieButton.textContent = "Play Music ♡";
+
+}
+
 });
 
-document.getElementById('fullPhoto').addEventListener('click',event=>{
-  event.stopPropagation();
+song.addEventListener("timeupdate",updateSlideshow);
+
+song.addEventListener("play",()=>{
+pauseMovieButton.textContent = "Pause Music ♡";
 });
+
+song.addEventListener("pause",()=>{
+
+if(!songFinished){
+pauseMovieButton.textContent = "Play Music ♡";
+movieStatus.textContent = "Music paused. Tap Play Music to continue ❤️";
+}
+
+});
+
+pauseMovieButton.addEventListener("click",async()=>{
+
+if(song.paused){
+
+try{
+await song.play();
+}catch(error){
+movieStatus.textContent = "Music couldn't start. Please check the audio file.";
+}
+
+}else{
+
+song.pause();
+
+}
+
+});
+
+song.addEventListener("ended",()=>{
+
+songFinished = true;
+
+movieProgressFill.style.width = "100%";
+pauseMovieButton.classList.add("hidden");
+
+movieStatus.textContent = "Our song has finished ❤️";
+finishMessage.classList.remove("hidden");
+
+});
+
+song.addEventListener("error",()=>{
+
+movieStatus.textContent =
+"Sorry, the song could not be loaded. Please check that our-song.mp3 is uploaded correctly.";
+
+});
+
+
+/* CONTINUE AFTER SONG */
+
+document.getElementById("continueButton").addEventListener("click",()=>{
+
+movieScreen.classList.add("hidden");
+birthdayScreen.classList.remove("hidden");
+
+window.scrollTo({top:0,behavior:"smooth"});
+
+startRosePetals();
+
+});
+
+
+/* EXTRA SONG PLAYER AFTER THE MOVIE */
+
+const playSongButton = document.getElementById("playSong");
+const musicStatus = document.getElementById("musicStatus");
+
+playSongButton.addEventListener("click",async()=>{
+
+if(song.paused){
+
+try{
+await song.play();
+musicStatus.textContent = "Playing for Baby ❤️";
+playSongButton.textContent = "♥";
+}catch(error){
+musicStatus.textContent = "Please check the song file.";
+}
+
+}else{
+
+song.pause();
+musicStatus.textContent = "Paused ♡";
+playSongButton.textContent = "♡";
+
+}
+
+});
+
+song.addEventListener("play",()=>{
+playSongButton.textContent = "♥";
+musicStatus.textContent = "Playing for Baby ❤️";
+});
+
+song.addEventListener("pause",()=>{
+playSongButton.textContent = "♡";
+musicStatus.textContent = "Paused ♡";
+});
+
+
+/* PHOTO ENLARGEMENT */
+
+document.querySelectorAll(".gallery img").forEach(photo=>{
+
+photo.addEventListener("click",()=>{
+
+document.getElementById("fullPhoto").src = photo.src;
+document.getElementById("photoViewer").style.display = "flex";
+
+});
+
+});
+
+document.getElementById("fullPhoto").addEventListener("click",event=>{
+event.stopPropagation();
+});
+
+
+/* CAKE SURPRISE */
+
+document.getElementById("wishButton").addEventListener("click",()=>{
+
+document.getElementById("wish").classList.remove("hidden");
+document.getElementById("birthdayCake").classList.remove("hidden");
+
+});
+
+
+/* GIFT SURPRISE */
+
+document.getElementById("giftBox").addEventListener("click",function(){
+
+this.classList.toggle("opened");
+
+document.getElementById("giftMessage").classList.toggle("hidden");
+
+});
+
+
+/* ROSE PETALS */
+
+let petalTimer = null;
 
 function createPetal(){
-  const petal=document.createElement("div");
-  petal.className="petal";
-  petal.innerHTML="🌹";
-  petal.style.left=Math.random()*100+"vw";
-  petal.style.fontSize=(15+Math.random()*15)+"px";
-  petal.style.animationDuration=(5+Math.random()*5)+"s";
 
-  document.body.appendChild(petal);
-  setTimeout(()=>petal.remove(),10000);
+const petal = document.createElement("div");
+
+petal.className = "petal";
+petal.textContent = "🌹";
+petal.style.left = Math.random() * 100 + "vw";
+petal.style.fontSize = (15 + Math.random() * 15) + "px";
+petal.style.animationDuration = (5 + Math.random() * 5) + "s";
+
+document.body.appendChild(petal);
+
+setTimeout(()=>petal.remove(),10000);
+
 }
 
-setInterval(createPetal,800);
+function startRosePetals(){
+
+if(petalTimer) return;
+
+petalTimer = setInterval(createPetal,800);
+
+}
+
 </script>
+
+</body>
+</html>
