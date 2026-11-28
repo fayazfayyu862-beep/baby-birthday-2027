@@ -67,48 +67,108 @@ img{display:block;max-width:100%}
 }
 .btn:disabled{opacity:.55;cursor:not-allowed}
 
-/* Countdown */
-#lockScreen{
-  min-height:100svh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:25px;
+
+/* BIRTHDAY COUNTDOWN SCREEN */
+#lockScreen {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 25px;
   background:
-    radial-gradient(circle at 20% 20%,#fff 0,transparent 35%),
-    linear-gradient(145deg,#f9e9ec,#fff8f4);
+    radial-gradient(circle at 20% 20%, #fff 0, transparent 35%),
+    linear-gradient(145deg, #f9e9ec, #fff8f4);
 }
-.lock-card{
-  max-width:520px;
-  width:100%;
-  padding:38px 24px;
-  border:1px solid #fff;
-  border-radius:25px;
-  background:#ffffffb8;
-  box-shadow:0 15px 60px #8d58631c;
+
+.lock-card {
+  max-width: 520px;
+  width: 100%;
+  padding: 38px 24px;
+  border: 1px solid #fff;
+  border-radius: 25px;
+  background: #ffffffb8;
+  box-shadow: 0 15px 60px #8d58631c;
 }
-.lock-heart{font-size:42px}
-#countdown{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  margin:28px 0;
+
+.lock-heart {
+  font-size: 42px;
+  margin-bottom: 12px;
 }
-.time-box{
-  background:#fff;
-  border:1px solid #f0d9de;
-  border-radius:13px;
-  padding:13px 8px;
-  min-width:65px;
+
+#lockScreen h1 {
+  margin: 12px 0;
 }
-.time-box strong{display:block;font-size:24px;font-weight:normal}
-.time-box span{
-  font:10px Arial,sans-serif;
-  letter-spacing:1px;
-  color:#9c777e;
+
+#lockScreen h2 {
+  font-size: 25px;
+  letter-spacing: 1px;
 }
-#lockMessage{line-height:1.7}
+
+#lockScreen .eyebrow {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #b47b88;
+  text-transform: uppercase;
+}
+
+#countdown {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 28px 0;
+}
+
+.time-box {
+  background: #fff;
+  border: 1px solid #f0d9de;
+  border-radius: 13px;
+  padding: 13px 8px;
+  min-width: 65px;
+}
+
+.time-box strong {
+  display: block;
+  font-size: 24px;
+  font-weight: normal;
+  color: #9f5368;
+}
+
+.time-box span {
+  font: 10px Arial, sans-serif;
+  letter-spacing: 1px;
+  color: #9c777e;
+}
+
+#lockMessage {
+  line-height: 1.7;
+}
+
+#lockScreen .small {
+  font-size: 12px;
+  color: #9c777e;
+  line-height: 1.6;
+}
+
+@media (max-width: 380px) {
+  #countdown {
+    gap: 6px;
+  }
+
+  .time-box {
+    min-width: 55px;
+    padding: 11px 5px;
+  }
+
+  .time-box strong {
+    font-size: 21px;
+  }
+
+  .time-box span {
+    font-size: 9px;
+  }
+}
+
 
 /* Entrance */
 #entrance{
@@ -499,6 +559,7 @@ footer{
 <body>
 
 
+
 <!-- BIRTHDAY COUNTDOWN -->
 <section id="lockScreen">
   <div class="lock-card">
@@ -518,11 +579,11 @@ footer{
     <div class="eyebrow">THE BIG DAY</div>
 
     <h2 style="color:#9f5368;font-weight:normal;margin:10px 0 5px">
-      January 1, 2026
+      November 29, 2026
     </h2>
 
     <p style="margin:0 0 20px;color:#9f5368">
-      Friday · 12:00 AM · Indian Standard Time
+      Sunday · 12:00 AM · Indian Standard Time
     </p>
 
     <div id="countdown">
@@ -557,6 +618,7 @@ footer{
 
   </div>
 </section>
+
 
 
 <!-- BIRTHDAY ENTRANCE -->
