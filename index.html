@@ -4,553 +4,799 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#fff1f4">
+<meta name="theme-color" content="#f8e9eb">
 <title>A Little World for Baby ❤️</title>
 
 <style>
+:root {
+  --pink:#d98e9c;
+  --deep:#9f5368;
+  --cream:#fff8f4;
+  --ink:#563c42;
+  --gold:#c49b65;
+}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
   margin:0;
   font-family:Georgia,'Times New Roman',serif;
-  background:#fff5f6;
-  color:#573d43;
+  background:var(--cream);
+  color:var(--ink);
+  overflow-x:hidden;
+}
+button{font:inherit;cursor:pointer}
+img{display:block;max-width:100%}
+.hidden{display:none!important}
+.script{font-style:italic}
+.small{font-size:.88rem;line-height:1.7}
+.eyebrow{
+  text-transform:uppercase;
+  letter-spacing:3px;
+  font:11px Arial,sans-serif;
+  color:var(--deep);
+}
+.section{
+  padding:75px 20px;
   text-align:center;
 }
-.hidden{display:none!important}
-button{
+.section h2{
+  font-size:clamp(30px,7vw,46px);
+  font-weight:normal;
+  margin:12px 0;
+}
+.section-intro{
+  max-width:560px;
+  margin:12px auto 35px;
+  line-height:1.8;
+  color:#80666a;
+}
+.btn{
   border:0;
   border-radius:30px;
-  padding:13px 25px;
-  background:#bd7185;
+  padding:14px 25px;
+  background:var(--deep);
   color:white;
-  font-size:15px;
-  cursor:pointer;
-  box-shadow:0 5px 16px #bd718533;
+  box-shadow:0 8px 20px #9f53682b;
+  transition:.25s;
 }
-button:active{transform:scale(.97)}
-h1,h2{font-weight:normal}
-p{line-height:1.7}
-section{padding:55px 18px}
-#locked{
-  min-height:100vh;
+.btn:hover{transform:translateY(-2px)}
+.btn.light{
+  background:#fff;
+  color:var(--deep);
+  border:1px solid #e8c9cf;
+}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+
+/* Countdown */
+#lockScreen{
+  min-height:100svh;
   display:flex;
-  flex-direction:column;
-  justify-content:center;
   align-items:center;
+  justify-content:center;
+  text-align:center;
   padding:25px;
-  background:linear-gradient(145deg,#fff0f3,#f8dce4);
+  background:
+    radial-gradient(circle at 20% 20%,#fff 0,transparent 35%),
+    linear-gradient(145deg,#f9e9ec,#fff8f4);
 }
-.heart{font-size:55px;animation:heartbeat 1.5s infinite}
-@keyframes heartbeat{50%{transform:scale(1.15)}}
-#countdown{font-size:25px;color:#a4546b;margin:20px}
-#countdown small{font-size:13px}
+.lock-card{
+  max-width:520px;
+  width:100%;
+  padding:38px 24px;
+  border:1px solid #fff;
+  border-radius:25px;
+  background:#ffffffb8;
+  box-shadow:0 15px 60px #8d58631c;
+}
+.lock-heart{font-size:42px}
+#countdown{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin:28px 0;
+}
+.time-box{
+  background:#fff;
+  border:1px solid #f0d9de;
+  border-radius:13px;
+  padding:13px 8px;
+  min-width:65px;
+}
+.time-box strong{display:block;font-size:24px;font-weight:normal}
+.time-box span{
+  font:10px Arial,sans-serif;
+  letter-spacing:1px;
+  color:#9c777e;
+}
+#lockMessage{line-height:1.7}
+
+/* Entrance */
+#entrance{
+  min-height:100svh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:25px;
+  background:linear-gradient(145deg,#f8e5e9,#fff9f5);
+}
+.entrance-card{max-width:560px}
+.entrance-card h1{
+  font-size:clamp(42px,10vw,70px);
+  font-weight:normal;
+  color:var(--deep);
+  margin:15px 0;
+}
+.entrance-card p{line-height:1.9;color:#84666c}
+
+/* Movie */
 #movieScreen{
-  min-height:100vh;
-  background:#160e15;
+  min-height:100svh;
+  background:#21191c;
   color:white;
   display:flex;
   flex-direction:column;
-  justify-content:center;
   align-items:center;
+  justify-content:center;
   padding:22px 14px;
+  text-align:center;
 }
-.movie-heading{font-size:14px;letter-spacing:4px;color:#e9b9c7}
+.movie-heading{margin:5px 0 18px}
+.movie-heading h2{
+  font-size:clamp(28px,7vw,42px);
+  font-weight:normal;
+  margin:8px 0;
+}
 .movie-frame{
-  width:100%;
-  max-width:440px;
+  width:min(100%,430px);
+  aspect-ratio:4/5;
   position:relative;
   overflow:hidden;
-  border-radius:18px;
-  background:#241820;
+  border-radius:17px;
+  background:#392b30;
   box-shadow:0 15px 50px #0008;
 }
 .movie-frame img{
   width:100%;
-  height:min(65vh,590px);
+  height:100%;
   object-fit:cover;
-  display:block;
   opacity:1;
-  transition:opacity .65s ease;
+  transition:opacity .8s ease;
+  animation:photoMotion 6s ease-in-out infinite alternate;
 }
-.movie-frame img.fade{opacity:0}
-.photo-caption{
+@keyframes photoMotion{
+  from{transform:scale(1) translateX(0)}
+  to{transform:scale(1.085) translateX(-1.2%)}
+}
+.movie-frame:after{
+  content:"";
   position:absolute;
-  left:0;right:0;bottom:0;
-  padding:55px 20px 25px;
-  background:linear-gradient(transparent,#130b12eF);
-  color:#fff;
-  font-size:clamp(19px,5vw,25px);
-  line-height:1.45;
-  text-shadow:0 2px 8px #000;
-  opacity:1;
-  transition:opacity .5s ease,transform .5s ease;
+  inset:45% 0 0;
+  background:linear-gradient(transparent,#0009);
+  pointer-events:none;
 }
-.photo-caption.fade{opacity:0;transform:translateY(12px)}
-.movie-progress{
-  width:100%;
-  max-width:440px;
-  height:3px;
-  background:#ffffff35;
-  margin:18px 0;
-  border-radius:5px;
+.movie-caption{
+  position:absolute;
+  z-index:2;
+  bottom:22px;
+  left:15px;
+  right:15px;
+  font-size:clamp(17px,4vw,23px);
+  line-height:1.5;
+  text-shadow:0 2px 8px #000;
+}
+.movie-count{
+  margin:13px 0;
+  color:#e9c9d0;
+  font:12px Arial,sans-serif;
+  letter-spacing:2px;
+}
+.movie-controls{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:center;
+  margin:10px 0;
+}
+.movie-instructions{
+  color:#d6c2c7;
+  font:12px Arial,sans-serif;
+  line-height:1.8;
+  max-width:430px;
+  margin:15px auto;
+}
+#continueButton{margin-top:12px}
+
+/* Main page */
+#birthdayPage{
+  animation:fadeIn 1.5s ease;
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.hero{
+  min-height:90svh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:40px 20px;
+  background:
+    radial-gradient(circle at 50% 20%,#fff 0,transparent 42%),
+    linear-gradient(145deg,#f8e4e8,#fff9f5);
+  position:relative;
   overflow:hidden;
 }
-#progressFill{height:100%;width:0;background:#f3b6c8}
-#movieStatus{font-size:13px;color:#e7cbd4;min-height:20px}
-.movie-controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:12px}
-.movie-controls button{background:#a75c73}
-#continueButton{background:#e3a6b8;color:#351d26;margin-top:15px}
-#birthday{
-  background:linear-gradient(#fff4f6,#fffafa);
+.hero-content{max-width:650px;position:relative;z-index:1}
+.hero h1{
+  color:var(--deep);
+  font-size:clamp(48px,12vw,83px);
+  line-height:1.05;
+  font-weight:normal;
+  margin:16px 0;
 }
-.hero{
-  padding:65px 20px 35px;
-  background:linear-gradient(145deg,#f7dce4,#fff1f4);
+.hero p{line-height:1.9;color:#80666a}
+.hero-heart{font-size:32px}
+
+/* Voice */
+.voice-card{
+  max-width:540px;
+  margin:30px auto 0;
+  padding:30px 22px;
+  border-radius:22px;
+  background:#fff;
+  border:1px solid #f0dce0;
+  box-shadow:0 10px 35px #80525c12;
 }
-.hero h1{font-size:clamp(34px,8vw,48px);color:#a6536c}
-.hero p{font-size:17px}
+.voice-icon{font-size:35px;margin-bottom:10px}
+.voice-card h3{font-size:25px;font-weight:normal;margin:8px}
+.voice-card p{line-height:1.7;color:#8b7176}
+audio{width:100%;margin-top:18px}
+.audio-help{font:12px Arial,sans-serif;color:#987c82;line-height:1.7;margin-top:12px}
+
+/* Story timeline */
+.timeline{
+  max-width:650px;
+  margin:40px auto 0;
+  text-align:left;
+  position:relative;
+}
+.timeline:before{
+  content:"";
+  position:absolute;
+  left:14px;
+  top:10px;
+  bottom:10px;
+  width:1px;
+  background:#dfb5be;
+}
+.timeline-item{
+  position:relative;
+  padding:0 0 35px 48px;
+}
+.timeline-item:before{
+  content:"";
+  position:absolute;
+  left:8px;
+  top:4px;
+  width:13px;
+  height:13px;
+  border-radius:50%;
+  background:var(--deep);
+  border:3px solid #f8e7ea;
+}
+.timeline-date{
+  font:11px Arial,sans-serif;
+  letter-spacing:2px;
+  color:var(--deep);
+  text-transform:uppercase;
+}
+.timeline-item h3{
+  font-size:25px;
+  font-weight:normal;
+  margin:8px 0;
+}
+.timeline-item p{line-height:1.8;color:#80666a;margin:0}
+
+/* Gallery */
 .gallery{
   display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
   gap:12px;
   max-width:850px;
-  margin:25px auto;
+  margin:30px auto;
 }
-.gallery img{
+.gallery-item{
+  position:relative;
+  padding:0;
+  border:0;
+  background:white;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 5px 20px #76505a16;
+}
+.gallery-item img{
   width:100%;
-  height:230px;
+  aspect-ratio:4/5;
   object-fit:cover;
-  border-radius:13px;
-  box-shadow:0 5px 18px #9e66701c;
-  cursor:pointer;
+  transition:transform .5s;
+}
+.gallery-item:hover img{transform:scale(1.04)}
+.gallery-item span{
+  display:block;
+  padding:12px 8px;
+  font-size:14px;
+  line-height:1.5;
 }
 @media(min-width:650px){
   .gallery{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .gallery img{height:280px}
 }
-.card{
-  max-width:650px;
-  margin:22px auto;
-  padding:28px 22px;
-  background:#fff;
-  border-radius:18px;
-  box-shadow:0 7px 25px #a85c7015;
+
+/* Notes */
+.notes-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
+  gap:13px;
+  max-width:760px;
+  margin:30px auto;
 }
 .note{
-  background:#fff9f0;
-  border:1px solid #f0dfc8;
-  padding:20px;
-  margin:13px auto;
-  max-width:540px;
-  border-radius:8px;
-  font-style:italic;
+  min-height:145px;
+  border:1px solid #f0d5da;
+  border-radius:14px;
+  background:#fff;
+  color:var(--deep);
+  padding:20px 12px;
+  line-height:1.6;
+  box-shadow:0 5px 20px #76505a0c;
 }
-#photoViewer{
-  position:fixed;
-  inset:0;
-  z-index:20;
-  background:#000e;
+.note span{display:block;font-size:24px;margin-bottom:10px}
+.note-content{
   display:none;
+  margin-top:12px;
+  font-size:14px;
+  color:#73575d;
+}
+.note.open .note-content{display:block}
+
+/* Letter */
+.letter-wrap{max-width:600px;margin:30px auto}
+.envelope{
+  background:#f0d7d6;
+  border:1px solid #e7c1c6;
+  padding:30px 18px;
+  border-radius:12px;
+  box-shadow:0 10px 30px #76505a16;
+}
+.envelope-top{font-size:35px}
+.envelope h3{font-weight:normal;font-size:25px}
+.letter-paper{
+  display:none;
+  text-align:left;
+  padding:28px 22px;
+  margin-top:18px;
+  border-radius:5px;
+  background:#fff9e9;
+  color:#65504a;
+  line-height:2;
+  box-shadow:0 5px 25px #00000012;
+  white-space:pre-line;
+}
+.letter-paper.show{display:block;animation:fadeIn .8s}
+
+/* Cake */
+.cake-card{
+  max-width:520px;
+  margin:30px auto;
+  background:#fff;
+  border-radius:20px;
+  padding:30px 20px;
+  box-shadow:0 10px 30px #76505a12;
+}
+.cake{font-size:95px;line-height:1.5}
+.candle-message{min-height:30px;color:var(--deep);line-height:1.7}
+
+/* Gift */
+.gift-card{
+  max-width:520px;
+  margin:30px auto;
+  padding:28px 20px;
+  background:#fff;
+  border:1px solid #f0dce0;
+  border-radius:20px;
+}
+.gift-icon{font-size:85px;cursor:pointer;transition:.3s}
+.gift-icon:hover{transform:scale(1.08)}
+.gift-message{
+  display:none;
+  line-height:1.9;
+  padding:18px 8px 0;
+}
+.gift-message.show{display:block;animation:fadeIn .8s}
+
+/* Ending */
+#ending{
+  min-height:100svh;
+  padding:70px 22px;
+  background:#261d21;
+  color:#fff5f2;
+  text-align:center;
+  display:flex;
   justify-content:center;
   align-items:center;
-  padding:15px;
+  position:relative;
+  overflow:hidden;
 }
-#photoViewer img{
-  max-width:100%;
-  max-height:85vh;
-  object-fit:contain;
+.ending-content{max-width:620px;position:relative;z-index:1}
+.ending h2{
+  font-size:clamp(38px,9vw,60px);
+  font-weight:normal;
+  color:#f0cbd3;
+}
+.ending p{line-height:2;font-size:17px;color:#f2dfe2}
+.ending-photo{
+  width:min(75vw,280px);
+  aspect-ratio:4/5;
+  object-fit:cover;
+  margin:30px auto;
+  border:5px solid #fff4;
   border-radius:12px;
+}
+.signature{font-size:27px;font-style:italic;color:#f2c4ce;margin-top:30px}
+#replayEnding{margin-top:20px}
+
+/* Photo viewer */
+#photoViewer{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:100;
+  background:#140e11ed;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+#photoViewer.show{display:flex}
+#photoViewer img{
+  max-height:82vh;
+  max-width:95vw;
+  object-fit:contain;
+  border-radius:8px;
 }
 #closeViewer{
   position:absolute;
-  top:20px;right:20px;
-  background:#ffffff33;
+  top:20px;
+  right:20px;
+  background:#fff;
+  color:#573a43;
+  border:0;
+  border-radius:50%;
+  width:42px;
+  height:42px;
+  font-size:22px;
 }
-#cake{font-size:75px;margin:15px}
-#giftBox{
-  font-size:75px;
-  cursor:pointer;
-  display:inline-block;
-  transition:transform .3s;
-}
-#giftBox:active{transform:scale(1.15)}
-#giftMessage{font-size:20px;color:#a6536c}
-.letter{
-  max-width:650px;
-  margin:25px auto;
-  padding:30px 23px;
-  background:#f7edda;
-  border:1px solid #e2d1ae;
-  box-shadow:0 8px 25px #7a5a351b;
-  color:#58452e;
-  text-align:left;
-  line-height:1.9;
-  border-radius:5px;
-}
-.letter h2{text-align:center}
-footer{padding:30px 15px;color:#a47782;font-size:13px}
-#petals{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:10;
-  overflow:hidden;
-}
+
+/* Petals */
 .petal{
-  position:absolute;
+  position:fixed;
   top:-30px;
+  z-index:80;
+  pointer-events:none;
   animation:fall linear forwards;
-  opacity:.75;
 }
 @keyframes fall{
-  to{transform:translateY(110vh) rotate(500deg);opacity:0}
+  to{transform:translateY(110vh) rotate(650deg);opacity:0}
+}
+footer{
+  padding:25px;
+  text-align:center;
+  color:#a17d84;
+  background:#fff7f4;
+  font:11px Arial,sans-serif;
+  letter-spacing:2px;
 }
 </style>
 </head>
 
 <body>
 
-<div id="locked">
-  <div class="heart">❤️</div>
-  <h1>A Little World for Baby</h1>
-  <p>Something beautiful is waiting for you...</p>
-  <div id="countdown">Loading...</div>
-  <p>Come back when the clock reaches your special day.</p>
-</div>
 
-<div id="welcomeScreen" class="hidden">
-  <div class="hero">
-    <div class="heart">💗</div>
-    <h1>Happy Birthday, Baby</h1>
-    <p>I made a little world just for you.</p>
-    <p>Before you enter, there's something I want you to see.</p>
-    <button id="beginButton">Begin our little movie ❤️</button>
-    <p style="font-size:12px">Find a quiet moment, turn your sound on, and enjoy.</p>
+<!-- BIRTHDAY COUNTDOWN -->
+<section id="lockScreen">
+  <div class="lock-card">
+
+    <div class="lock-heart">❤️</div>
+
+    <div class="eyebrow">A little surprise is waiting</div>
+
+    <h1 style="font-weight:normal;color:#9f5368">
+      For Baby
+    </h1>
+
+    <p id="lockMessage">
+      This little world is waiting for your special day.
+    </p>
+
+    <div class="eyebrow">THE BIG DAY</div>
+
+    <h2 style="color:#9f5368;font-weight:normal;margin:10px 0 5px">
+      January 1, 2026
+    </h2>
+
+    <p style="margin:0 0 20px;color:#9f5368">
+      Friday · 12:00 AM · Indian Standard Time
+    </p>
+
+    <div id="countdown">
+      <div class="time-box">
+        <strong id="days">00</strong>
+        <span>DAYS</span>
+      </div>
+
+      <div class="time-box">
+        <strong id="hours">00</strong>
+        <span>HOURS</span>
+      </div>
+
+      <div class="time-box">
+        <strong id="minutes">00</strong>
+        <span>MINUTES</span>
+      </div>
+
+      <div class="time-box">
+        <strong id="seconds">00</strong>
+        <span>SECONDS</span>
+      </div>
+    </div>
+
+    <p class="small">
+      Some surprises are worth waiting for. 💗
+    </p>
+
+    <p class="small" style="margin-top:15px">
+      Made with love, just for you. ❤️
+    </p>
+
   </div>
-</div>
+</section>
 
-<div id="movieScreen" class="hidden">
-  <p class="movie-heading">A LITTLE MOVIE FOR BABY</p>
-  <h2 style="font-weight:normal">Every picture holds a piece of us</h2>
+
+<!-- BIRTHDAY ENTRANCE -->
+<section id="entrance" class="hidden">
+  <div class="entrance-card">
+    <div style="font-size:45px">🌷</div>
+    <div class="eyebrow">A world made just for you</div>
+    <h1>Happy Birthday,<br>Baby ❤️</h1>
+    <p>
+      I made this little place for you.<br>
+      Every photo, every word and every surprise<br>
+      carries a little piece of my heart.
+    </p>
+    <button class="btn" id="beginMovie">Begin our little movie ♥</button>
+    <p class="small">Find a comfortable place, turn your volume on, and enjoy.</p>
+  </div>
+</section>
+
+<!-- CINEMATIC SLIDESHOW -->
+<section id="movieScreen" class="hidden">
+  <div class="movie-heading">
+    <div class="eyebrow" style="color:#e9c9d0">Our little memories</div>
+    <h2>Every picture has a story</h2>
+    <p class="small" style="color:#d6c2c7">A little movie made with love.</p>
+  </div>
 
   <div class="movie-frame">
-    <img id="moviePhoto" src="assets/photos/photo-01.jpg" alt="A special memory">
-    <div id="photoCaption" class="photo-caption">
-      Some stories begin without us knowing how beautiful they'll become.
+    <img id="moviePhoto" src="assets/photos/photo-01.jpg" alt="Our memory">
+    <div class="movie-caption" id="movieCaption">
+      Some people become memories. You became my favourite part of life.
     </div>
   </div>
 
-  <div class="movie-progress">
-    <div id="progressFill"></div>
-  </div>
-
-  <div id="movieStatus">Your little movie is ready ❤️</div>
+  <div class="movie-count" id="movieCount">01 / 15</div>
 
   <div class="movie-controls">
-    <button id="pauseButton">Pause music</button>
+    <button class="btn light" id="pauseMovie">Pause song</button>
+    <button class="btn light" id="skipMovie">Skip movie</button>
   </div>
 
-  <p style="font-size:12px;color:#c9aeb8;max-width:360px">
-    Let the song play and enjoy each memory. You can pause it whenever you like.
+  <audio id="songPlayer" preload="metadata">
+    <source src="assets/photos/our-song.mp3" type="audio/mpeg">
+  </audio>
+
+  <p class="movie-instructions" id="movieInstruction">
+    🎵 Let the song play while the photos and messages appear.
+    You can pause or skip whenever you want.
+    When the song finishes, tap Continue to explore the birthday surprises.
   </p>
 
-  <button id="continueButton" class="hidden">Continue to your birthday surprise ❤️</button>
-</div>
+  <button class="btn hidden" id="continueButton">Continue to your birthday surprise ❤️</button>
+</section>
 
-<audio id="ourSong" preload="auto">
-  <source src="assets/photos/our-song.mp3" type="audio/mpeg">
-</audio>
+<!-- MAIN BIRTHDAY PAGE -->
+<main id="birthdayPage" class="hidden">
 
-<main id="birthday" class="hidden">
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-heart">💗</div>
+      <div class="eyebrow">January 1, 2027</div>
+      <h1>Happy Birthday,<br>Baby</h1>
+      <p>
+        Today is all about you.<br>
+        Your smile, your heart, your little ways of making life special.
+        I hope this year gives you as much happiness as you bring into my life.
+      </p>
+      <p class="script" style="font-size:24px;color:#9f5368">With all my love, Muhaz ❤️</p>
+      <button class="btn" onclick="document.getElementById('voiceSection').scrollIntoView({behavior:'smooth'})">
+        There's something I want you to hear ↓
+      </button>
+    </div>
+  </section>
 
-  <header class="hero">
-    <div class="heart">❤️</div>
-    <h1>Happy Birthday, Baby!</h1>
-    <p>Welcome to your little world, made with all my love.</p>
-    <p>Today, every little thing here is for you.</p>
-  </header>
+  <!-- SEPARATE VOICE MESSAGE -->
+  <section class="section" id="voiceSection">
+    <div class="eyebrow">A little something from me</div>
+    <h2>A Message From Muhaz ❤️</h2>
+    <p class="section-intro">
+      Some things are better said in a voice than written in words.
+      Tap the button below when you're ready to listen.
+    </p>
 
-  <section>
-    <h2>Our Little Memories 📸</h2>
-    <p>Every picture has a story. Every story has you in it.</p>
+    <div class="voice-card">
+      <div class="voice-icon">🎙️</div>
+      <h3>Just for you, Baby</h3>
+      <p id="voiceStatus">Your personal voice message is waiting here.</p>
+      <audio id="voicePlayer" controls preload="none">
+        <source src="assets/photos/baby-voice.mp3" type="audio/mpeg">
+      </audio>
+      <p class="audio-help">
+        Press play to hear the message. You can pause it or listen again.
+      </p>
+    </div>
+  </section>
+
+  <!-- OUR STORY -->
+  <section class="section" style="background:#f9edef">
+    <div class="eyebrow">A few pages from our story</div>
+    <h2>How It All Began</h2>
+    <p class="section-intro">
+      It started with a simple message. I didn't know where it would lead,
+      but I'm glad I took that first step.
+    </p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-date">May 10, 2018</div>
+        <h3>The First Little Hello</h3>
+        <p>
+          I noticed you on Instagram. One post, one moment, and then I found
+          myself wanting to know the person behind that smile.
+          So I sent you a message. I never knew that a simple hello
+          could become such a big part of my life.
+        </p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">April 11</div>
+        <h3>I Tried One More Time</h3>
+        <p>
+          I gathered the courage to ask you again.
+          I told you that if you didn't accept, I'd stop texting.
+          Looking back, that moment became one of the little chapters
+          I will always remember.
+        </p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">2022</div>
+        <h3>Finally, In Person</h3>
+        <p>
+          After all those conversations, we finally met.
+          A moment that made our story feel a little more real.
+          Some memories don't need perfect dates to stay special.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHOTO GALLERY -->
+  <section class="section">
+    <div class="eyebrow">Little pieces of us</div>
+    <h2>Our Memories</h2>
+    <p class="section-intro">
+      Every picture holds a moment. Tap any photo to see it bigger.
+      Take your time. There's no rush.
+    </p>
+
     <div class="gallery" id="gallery"></div>
   </section>
 
-  <section>
-    <h2>Little Things I Want You to Know 💌</h2>
-    <div class="note">You became a beautiful part of my life in a way I never expected.</div>
-    <div class="note">Even on ordinary days, you give me something special to smile about.</div>
-    <div class="note">I don't need every moment to be perfect. I just want the real moments with you.</div>
-    <div class="note">Thank you for all the memories we've made and all the ones still waiting for us.</div>
-    <div class="note">If I had to choose again, I'd still want to know your story.</div>
-  </section>
+  <!-- HIDDEN NOTES -->
+  <section class="section" style="background:#f9edef">
+    <div class="eyebrow">Open whenever you want</div>
+    <h2>Little Notes For You</h2>
+    <p class="section-intro">There are a few things I never want you to forget. Tap each note to open it.</p>
 
-  <section>
-    <div class="card">
-      <h2>A Little Birthday Wish 🎂</h2>
-      <div id="cake">🎂</div>
-      <p>Close your eyes, make a wish, and tap the button.</p>
-      <button id="wishButton">Make your wish ✨</button>
-      <p id="wishMessage" class="hidden">May life give you more beautiful moments than you can count. ❤️</p>
+    <div class="notes-grid">
+      <button class="note" onclick="toggleNote(this)">
+        <span>🌷</span> A little reminder
+        <div class="note-content">You don't have to be perfect to be precious to me. You are special just as you are.</div>
+      </button>
+      <button class="note" onclick="toggleNote(this)">
+        <span>💌</span> On difficult days
+        <div class="note-content">Even on the days when everything feels heavy, I hope you remember that you deserve gentleness and happiness.</div>
+      </button>
+      <button class="note" onclick="toggleNote(this)">
+        <span>✨</span> My favourite thing
+        <div class="note-content">It's not one big thing. It's all the little things that make you who you are.</div>
+      </button>
+      <button class="note" onclick="toggleNote(this)">
+        <span>❤️</span> One promise
+        <div class="note-content">I want to keep choosing honesty, patience and effort as we write our story.</div>
+      </button>
+      <button class="note" onclick="toggleNote(this)">
+        <span>🌙</span> Before you sleep
+        <div class="note-content">I hope your nights are peaceful and your mornings bring you something to smile about.</div>
+      </button>
     </div>
   </section>
 
-  <section>
-    <div class="card">
-      <h2>A Little Gift for You 🎁</h2>
-      <p>There's a little surprise waiting. Tap the gift.</p>
-      <div id="giftBox" role="button" aria-label="Open gift">🎁</div>
-      <p id="giftMessage" class="hidden">With love, Muhaz ❤️<br>A little gift for the girl who means so much to me.</p>
+  <!-- PERSONAL LETTER -->
+  <section class="section">
+    <div class="eyebrow">A letter from my heart</div>
+    <h2>Something I Wrote For You</h2>
+    <p class="section-intro">There's a little letter waiting inside. Tap the envelope to open it.</p>
+
+    <div class="letter-wrap">
+      <div class="envelope">
+        <div class="envelope-top">💌</div>
+        <h3>To my Baby</h3>
+        <p class="small">A letter that belongs only to you.</p>
+        <button class="btn" id="openLetter">Open your letter</button>
+
+        <div class="letter-paper" id="letterPaper">My dearest Baby,
+
+Sometimes I think about how unexpectedly people enter our lives. You were once someone I had only seen on a screen. A simple message became conversations, and those conversations became memories I hold close.
+
+I know we are not perfect. We have our own days, our own feelings and our own difficult moments. I don't want to pretend that everything will always be easy.
+
+But I want us to keep learning, understanding and making time for each other.
+
+I hope you never feel that you have to become someone else to deserve love. I want you to keep being yourself, chasing the things that make you happy and becoming the person you dream of being.
+
+Thank you for being part of my story.
+
+Happy Birthday, Baby. I hope this year is kind to you.
+
+With love,
+Muhaz ❤️</div>
+      </div>
     </div>
   </section>
 
-  <section>
-    <h2>One Last Little Note 💗</h2>
-    <div class="letter">
-      <h2>To My Baby ❤️</h2>
-      <p>Hey Baby,</p>
-      <p>
-        I still remember seeing you on Instagram and finding a reason to send
-        that first message. I didn't know where a simple hello would lead us.
-      </p>
-      <p>
-        Life has given us different moments, memories, smiles and lessons.
-        And through all of it, you've remained someone very special to me.
-      </p>
-      <p>
-        I may not always find the perfect words, but I hope you never doubt
-        that you matter to me. I hope this little world makes you smile and
-        reminds you how much love went into making it.
-      </p>
-      <p>
-        I wish you happiness, peace, good health and everything your heart
-        quietly hopes for. Keep being you.
-      </p>
-      <p>Happy Birthday, Baby. ❤️</p>
-      <p style="text-align:right">With all my love,<br><strong>Muhaz ❤️</strong></p>
+  <!-- BIRTHDAY WISH -->
+  <section class="section" style="background:#f9edef">
+    <div class="eyebrow">Make a birthday wish</div>
+    <h2>A Wish Just For You 🎂</h2>
+    <p class="section-intro">
+      Close your eyes, make a wish and tap the button.
+      Imagine me cheering for you from wherever I am.
+    </p>
+
+    <div class="cake-card">
+      <div class="cake">🎂</div>
+      <p class="candle-message" id="wishMessage">Your birthday wish is waiting…</p>
+      <button class="btn" id="wishButton">I made my wish ✨</button>
     </div>
   </section>
 
-  <footer>
-    Made with love, just for Baby ❤️<br>
-    A Little World for Baby
-  </footer>
-</main>
+  <!-- GIFT -->
+  <section class="section">
+    <div class="eyebrow">One last little surprise</div>
+    <h2>A Little Gift For You</h2>
+    <p class="section-intro">I have something for you. Tap the gift to unwrap it.</p>
 
-<div id="photoViewer">
-  <button id="closeViewer">✕</button>
-  <img id="viewerImage" src="" alt="Memory enlarged">
-</div>
-
-<div id="petals"></div>
-
-<script>
-const photos = Array.from({length:15}, (_,i) =>
-  `assets/photos/photo-${String(i+1).padStart(2,"0")}.jpg`
-);
-
-const captions = [
-  "Some stories begin without us knowing how beautiful they'll become.",
-  "I never knew one little message could become such a big part of my life.",
-  "Some people arrive quietly and change the meaning of ordinary days.",
-  "If I could keep one feeling forever, it would be the happiness of being close to you.",
-  "Even the simplest moments become memories when they have you in them.",
-  "I wish I could show you how beautiful you look through my eyes.",
-  "The world keeps moving, but some moments deserve to stay still.",
-  "You make my favourite memories feel like home.",
-  "I don't need a perfect story. I just love the one we're writing.",
-  "Some smiles stay in our hearts long after the moment has passed.",
-  "If time could pause, I'd save a few more moments with you.",
-  "No matter how many pictures we take, they can never hold every feeling.",
-  "I hope we keep finding new reasons to laugh together.",
-  "There are a thousand things I could say, but one thing stays simple: you matter.",
-  "And if our story has more pages waiting, I hope they're filled with beautiful days."
-];
-
-const locked = document.getElementById("locked");
-const welcomeScreen = document.getElementById("welcomeScreen");
-const movieScreen = document.getElementById("movieScreen");
-const birthday = document.getElementById("birthday");
-const countdown = document.getElementById("countdown");
-
-const targetDate = new Date("2026-01-01T00:00:00+05:30").getTime();
-
-function checkBirthday(){
-  const now = Date.now();
-  const remaining = targetDate - now;
-
-  if(remaining <= 0){
-    locked.classList.add("hidden");
-    welcomeScreen.classList.remove("hidden");
-    return;
-  }
-
-  const days = Math.floor(remaining / 86400000);
-  const hours = Math.floor((remaining % 86400000) / 3600000);
-  const minutes = Math.floor((remaining % 3600000) / 60000);
-  const seconds = Math.floor((remaining % 60000) / 1000);
-
-  countdown.innerHTML =
-    `${days} days<br>${hours} hours : ${minutes} minutes : ${seconds} seconds`;
-}
-
-checkBirthday();
-setInterval(checkBirthday,1000);
-
-const song = document.getElementById("ourSong");
-const moviePhoto = document.getElementById("moviePhoto");
-const photoCaption = document.getElementById("photoCaption");
-const progressFill = document.getElementById("progressFill");
-const movieStatus = document.getElementById("movieStatus");
-const pauseButton = document.getElementById("pauseButton");
-const continueButton = document.getElementById("continueButton");
-
-let currentSlide = -1;
-let movieFinished = false;
-
-function showSlide(index){
-  if(index === currentSlide) return;
-  currentSlide = index;
-
-  moviePhoto.classList.add("fade");
-  photoCaption.classList.add("fade");
-
-  setTimeout(() => {
-    moviePhoto.src = photos[index];
-    photoCaption.textContent = captions[index];
-
-    moviePhoto.classList.remove("fade");
-    photoCaption.classList.remove("fade");
-  },350);
-}
-
-function updateMovie(){
-  if(!Number.isFinite(song.duration) || song.duration <= 0) return;
-
-  const progress = song.currentTime / song.duration;
-  const slideIndex = Math.min(14, Math.floor(progress * 15));
-
-  showSlide(slideIndex);
-  progressFill.style.width = `${Math.min(100,progress*100)}%`;
-}
-
-document.getElementById("beginButton").addEventListener("click", async () => {
-  welcomeScreen.classList.add("hidden");
-  movieScreen.classList.remove("hidden");
-  showSlide(0);
-
-  movieStatus.textContent = "Starting your song... ❤️";
-
-  try{
-    await song.play();
-    movieStatus.textContent = "Playing your little movie ❤️";
-    pauseButton.textContent = "Pause music";
-  }catch(error){
-    movieStatus.textContent = "Tap Play music to start your song.";
-    pauseButton.textContent = "Play music";
-  }
-});
-
-pauseButton.addEventListener("click", async () => {
-  if(song.paused){
-    try{
-      await song.play();
-      movieStatus.textContent = "Playing your little movie ❤️";
-      pauseButton.textContent = "Pause music";
-    }catch(error){
-      movieStatus.textContent = "Your song couldn't start. Please try again.";
-    }
-  }else{
-    song.pause();
-    movieStatus.textContent = "Music paused. Take your time ❤️";
-    pauseButton.textContent = "Play music";
-  }
-});
-
-song.addEventListener("timeupdate", updateMovie);
-
-song.addEventListener("ended", () => {
-  movieFinished = true;
-  progressFill.style.width = "100%";
-  showSlide(14);
-  movieStatus.textContent = "That's the end of our little movie. ❤️";
-  pauseButton.classList.add("hidden");
-  continueButton.classList.remove("hidden");
-});
-
-continueButton.addEventListener("click", () => {
-  movieScreen.classList.add("hidden");
-  birthday.classList.remove("hidden");
-  window.scrollTo({top:0,behavior:"smooth"});
-  startPetals();
-});
-
-song.addEventListener("error", () => {
-  movieStatus.textContent = "Couldn't load the song. Check that our-song.mp3 is in assets/photos.";
-});
-
-const gallery = document.getElementById("gallery");
-
-photos.forEach((src,index) => {
-  const img = document.createElement("img");
-  img.src = src;
-  img.alt = `Memory ${index+1}`;
-  img.loading = "lazy";
-  img.addEventListener("click", () => openPhoto(src));
-  gallery.appendChild(img);
-});
-
-const photoViewer = document.getElementById("photoViewer");
-const viewerImage = document.getElementById("viewerImage");
-
-function openPhoto(src){
-  viewerImage.src = src;
-  photoViewer.style.display = "flex";
-}
-
-function closePhoto(){
-  photoViewer.style.display = "none";
-  viewerImage.src = "";
-}
-
-document.getElementById("closeViewer").addEventListener("click",closePhoto);
-photoViewer.addEventListener("click",event => {
-  if(event.target === photoViewer) closePhoto();
-});
-
-document.getElementById("wishButton").addEventListener("click",() => {
-  document.getElementById("wishMessage").classList.remove("hidden");
-  document.getElementById("cake").textContent = "🕯️";
-  document.getElementById("wishButton").textContent = "Wish made ❤️";
-});
-
-document.getElementById("giftBox").addEventListener("click",() => {
-  document.getElementById("giftBox").textContent = "💝";
-  document.getElementById("giftMessage").classList.remove("hidden");
-});
-
-let petalsStarted = false;
-
-function startPetals(){
-  if(petalsStarted) return;
-  petalsStarted = true;
-
-  const container = document.getElementById("petals");
-
-  setInterval(() => {
-    const petal = document.createElement("div");
-    petal.className = "petal";
-    petal.textContent = ["🌸","🌷","💗"][Math.floor(Math.random()*3)];
-    petal.style.left = Math.random()*100 + "vw";
-    petal.style.fontSize = (12+Math.random()*15) + "px";
-    petal.style.animationDuration = (5+Math.random()*5) + "s";
-
-    container.appendChild(petal);
-    setTimeout(() => petal.remove(),10000);
-  },700);
-}
-</script>
-
-</body>
-</html>
+    <div class="gift-card">
+      <div class="gift-icon" id="giftIcon" role="button" tabindex="0" aria-label="Open gift">🎁</div>
+      <p class="small">Tap to open your gift</p>
+      <div class="gift-message" id="giftMessage">
+        <h3 style="font-weight:normal;color:#9f5368">With love, Muhaz ❤️</h3>
+        <p>
+          This little website
