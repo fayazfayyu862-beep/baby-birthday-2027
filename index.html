@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,6 +36,20 @@ p{line-height:1.8}
 }
 .divider{width:65px;height:1px;background:#d9a8b6;margin:25px auto}
 .heart{color:#d887a0}
+
+
+/* Birthday countdown */
+#lockScreen{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  padding:30px 20px;
+  background:radial-gradient(circle at top,#fff 0,#fff1f4 55%,#f9e2e9 100%);
+}
+.lock-card{max-width:520px;width:100%;padding:35px 22px;background:#ffffffd9;border:1px solid #f0dce2;border-radius:24px;box-shadow:0 12px 35px #9e627014}
+.lock-heart{font-size:55px;animation:heartbeat 1.8s infinite}
+.countdown-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:25px auto;max-width:430px}
+.countdown-unit{background:#fff;border:1px solid #f0dce2;border-radius:14px;padding:13px 5px}
+.countdown-unit strong{display:block;font-size:clamp(23px,6vw,34px);font-weight:normal;color:#a45470}
+.countdown-unit span{font:10px Arial,sans-serif;letter-spacing:1px;color:#bd8797;text-transform:uppercase}
 
 /* Opening */
 #entrance{
@@ -183,9 +196,26 @@ footer{padding:25px;background:#fff0f3;color:#a77b88;font:12px Arial,sans-serif;
 </style>
 </head>
 <body>
-  
+
+<!-- BIRTHDAY COUNTDOWN -->
+<section id="lockScreen">
+  <div class="lock-card">
+    <div class="lock-heart">❤️</div>
+    <div class="small">A little surprise is waiting</div>
+    <h1 style="font-size:clamp(38px,9vw,55px);margin:15px 0">For Baby</h1>
+    <p>This little world will open on your special day.</p>
+    <div class="countdown-grid" aria-live="polite">
+      <div class="countdown-unit"><strong id="days">00</strong><span>Days</span></div>
+      <div class="countdown-unit"><strong id="hours">00</strong><span>Hours</span></div>
+      <div class="countdown-unit"><strong id="minutes">00</strong><span>Minutes</span></div>
+      <div class="countdown-unit"><strong id="seconds">00</strong><span>Seconds</span></div>
+    </div>
+    <p class="audio-note">A little world made just for you. ❤️</p>
+  </div>
+</section>
+
 <!-- OPENING SCREEN -->
-<section id="entrance">
+<section id="entrance" class="hidden">
   <div class="open-card">
     <div class="open-heart">❤️</div>
     <div class="small">A little surprise for someone special</div>
@@ -216,9 +246,8 @@ footer{padding:25px;background:#fff0f3;color:#a77b88;font:12px Arial,sans-serif;
       Let the memories play, or skip whenever you like.
     </p>
   </div>
-</section>
-
-<!-- MAIN BIRTHDAY PAGE -->
+  </section>
+  <!-- MAIN BIRTHDAY PAGE -->
 <main id="birthdayPage" class="hidden">
 
   <!-- HERO -->
@@ -232,25 +261,9 @@ footer{padding:25px;background:#fff0f3;color:#a77b88;font:12px Arial,sans-serif;
       such a special part of my life.
     </p>
     <div class="heart" style="font-size:28px">♥ ♥ ♥</div>
-    <button class="btn" onclick="document.getElementById('ourMusic').scrollIntoView({behavior:'smooth'})">
+    <button class="btn" onclick="document.getElementById('ourStory').scrollIntoView({behavior:'smooth'})">
       Begin our memories
     </button>
-  </section>
-
-  <!-- MUSIC -->
-  <section id="ourMusic">
-    <div class="small">Press play and enjoy</div>
-    <h2>Our Little Song 🎵</h2>
-    <div class="audio-card">
-      <div style="font-size:35px">🎧</div>
-      <h3>Dandelions</h3>
-      <p class="audio-note">Play our song while looking through these memories.</p>
-      <audio id="ourSong" controls preload="metadata">
-        <source src="assets/photos/our-song.mp3" type="audio/mpeg">
-        Your browser does not support audio.
-      </audio>
-      <p class="audio-note">You can pause or replay the song anytime.</p>
-    </div>
   </section>
 
   <!-- VOICE MESSAGE -->
@@ -258,19 +271,11 @@ footer{padding:25px;background:#fff0f3;color:#a77b88;font:12px Arial,sans-serif;
     <div class="small">Something from my heart</div>
     <h2>A Message Just for You ❤️</h2>
     <div class="audio-card">
-      <div class="voice-icon">🎙️</div>
-      <h3>Listen to my voice</h3>
-      <p>
-        I wanted you to hear this in my own voice.
-        Find a quiet little moment and press play.
-      </p>
-      <audio id="babyVoice" controls preload="metadata">
-        <source src="assets/photos/baby-voice.mp3" type="audio/mpeg">
-        Your browser does not support audio.
-      </audio>
-      <p class="audio-note">
-        This is a separate voice message. You can listen after the song.
-      </p>
+      <div class="voice-icon">💌</div>
+      <h3>A Message from Muhaz</h3>
+      <p>I wanted you to hear this in my own voice. Find a quiet little moment and press play.</p>
+      <button class="btn" id="voiceButton" onclick="toggleVoiceMessage()">Listen to My Voice ❤️</button>
+      <p id="voiceStatus" class="audio-note">A little message, recorded just for you.</p>
     </div>
   </section>
 
@@ -475,10 +480,37 @@ footer{padding:25px;background:#fff0f3;color:#a77b88;font:12px Arial,sans-serif;
   <button onclick="closePhotoViewer()" aria-label="Close photo">×</button>
   <img id="viewerImage" src="" alt="Expanded memory photo">
 </div>
+<!-- AUDIO FILES (controls are intentionally hidden) -->
+<audio id="ourSong" preload="auto">
+  <source src="assets/photos/our-song.mp3" type="audio/mpeg">
+</audio>
+<audio id="babyVoice" preload="metadata">
+  <source src="assets/photos/baby-voice.mp3" type="audio/mpeg">
+</audio>
+
 <script>
+// BIRTHDAY COUNTDOWN — midnight, January 1, 2026 (India time)
+let countdownTimer = null;
+const birthdayDate = new Date("2026-01-01T00:00:00+05:30").getTime();
+
+function updateCountdown(){
+  const distance = birthdayDate - Date.now();
+  if(distance <= 0){
+    document.getElementById("lockScreen").classList.add("hidden");
+    document.getElementById("entrance").classList.remove("hidden");
+    clearInterval(countdownTimer);
+    return;
+  }
+  document.getElementById("days").textContent = String(Math.floor(distance / 86400000)).padStart(2,"0");
+  document.getElementById("hours").textContent = String(Math.floor(distance / 3600000) % 24).padStart(2,"0");
+  document.getElementById("minutes").textContent = String(Math.floor(distance / 60000) % 60).padStart(2,"0");
+  document.getElementById("seconds").textContent = String(Math.floor(distance / 1000) % 60).padStart(2,"0");
+}
+updateCountdown();
+countdownTimer = setInterval(updateCountdown,1000);
 
 // PHOTO LIST
-const photos = Array.from({length:15}, (_,i) =>
+const photos = Array.from({length:15},(_,i) =>
   `assets/photos/photo-${String(i+1).padStart(2,"0")}.jpg`
 );
 
@@ -501,7 +533,7 @@ const captions = [
   "And I hope our best memories are still waiting for us."
 ];
 
-// CINEMATIC MOVIE
+// CINEMATIC MOVIE + SONG
 let movieIndex = 0;
 let movieTimer = null;
 
@@ -509,11 +541,15 @@ function startMovie(){
   document.getElementById("entrance").classList.add("hidden");
   document.getElementById("movieScreen").classList.remove("hidden");
 
+  // The Open button is a user tap, allowing mobile browsers to start the song.
+  const song = document.getElementById("ourSong");
+  song.volume = 0.75;
+  song.play().catch(() => console.log("Check assets/photos/our-song.mp3 if the song does not play."));
+
   movieIndex = 0;
+  document.getElementById("movieContinue").classList.add("hidden");
   showMoviePhoto();
-
   clearInterval(movieTimer);
-
   movieTimer = setInterval(() => {
     if(movieIndex < photos.length - 1){
       movieIndex++;
@@ -521,28 +557,24 @@ function startMovie(){
     }else{
       finishMovie();
     }
-  }, 4000);
+  },4000);
 }
 
 function showMoviePhoto(){
   const photo = document.getElementById("moviePhoto");
   const caption = document.getElementById("movieCaption");
-
   photo.style.opacity = "0";
-
   setTimeout(() => {
     photo.src = photos[movieIndex];
     caption.textContent = captions[movieIndex];
     photo.style.opacity = "1";
-  }, 250);
+  },250);
 }
 
 function finishMovie(){
   clearInterval(movieTimer);
   movieTimer = null;
-
   document.getElementById("movieContinue").classList.remove("hidden");
-
   document.getElementById("movieCaption").textContent =
     "These are only a few memories. I hope we make many more together. ❤️";
 }
@@ -550,36 +582,49 @@ function finishMovie(){
 function skipMovie(){
   clearInterval(movieTimer);
   movieTimer = null;
-
   document.getElementById("movieContinue").classList.remove("hidden");
-
-  document.getElementById("movieCaption").textContent =
-    "Our memories are waiting inside. ❤️";
+  document.getElementById("movieCaption").textContent = "Our memories are waiting inside. ❤️";
 }
 
-// THIS WAS THE MISSING FUNCTION
 function openBirthday(){
   clearInterval(movieTimer);
-
   document.getElementById("movieScreen").classList.add("hidden");
   document.getElementById("birthdayPage").classList.remove("hidden");
-
   window.scrollTo({top:0,behavior:"instant"});
-
   startPetals();
 }
 
+// VOICE MESSAGE BUTTON
+function toggleVoiceMessage(){
+  const voice = document.getElementById("babyVoice");
+  const button = document.getElementById("voiceButton");
+  const status = document.getElementById("voiceStatus");
+  if(voice.paused){
+    voice.play().then(() => {
+      button.textContent = "Pause My Message";
+      status.textContent = "Playing a little message from me ❤️";
+    }).catch(() => {
+      status.textContent = "I couldn't play the recording. Check baby-voice.mp3.";
+    });
+  }else{
+    voice.pause();
+    button.textContent = "Continue My Message ❤️";
+    status.textContent = "Your message is paused.";
+  }
+}
+
+document.getElementById("babyVoice").addEventListener("ended",function(){
+  document.getElementById("voiceButton").textContent = "Listen to My Voice ❤️";
+  document.getElementById("voiceStatus").textContent = "A little message, recorded just for you.";
+});
+
 // PHOTO GALLERY
 let galleryIndex = 0;
-
 function updateGallery(){
   document.getElementById("galleryPhoto").src = photos[galleryIndex];
   document.getElementById("galleryCaption").textContent = captions[galleryIndex];
-
-  document.getElementById("photoCount").textContent =
-    `${galleryIndex+1} / ${photos.length}`;
+  document.getElementById("photoCount").textContent = `${galleryIndex+1} / ${photos.length}`;
 }
-
 function changePhoto(direction){
   galleryIndex = (galleryIndex + direction + photos.length) % photos.length;
   updateGallery();
@@ -587,18 +632,13 @@ function changePhoto(direction){
 
 // PHOTO VIEWER
 function showPhotoViewer(){
-  const viewer = document.getElementById("photoViewer");
-
   document.getElementById("viewerImage").src = photos[galleryIndex];
-
-  viewer.style.display = "flex";
+  document.getElementById("photoViewer").style.display = "flex";
 }
-
 function closePhotoViewer(){
   document.getElementById("photoViewer").style.display = "none";
 }
-
-document.addEventListener("keydown",function(event){
+document.addEventListener("keydown",event => {
   if(event.key === "Escape") closePhotoViewer();
 });
 
@@ -606,134 +646,45 @@ document.addEventListener("keydown",function(event){
 function makeWish(){
   document.getElementById("wishText").textContent =
     "May every little wish in your heart find its way to you. Happy Birthday, Baby! ❤️";
-
   document.querySelector(".cake").textContent = "🕯️🎂";
 }
 
 // GIFT SURPRISE
 function openGift(){
   const message = document.getElementById("giftMessage");
-
   message.classList.toggle("show");
-
-  const gift = document.querySelector(".gift-icon");
-
-  gift.textContent = message.classList.contains("show") ? "💝" : "🎁";
+  document.querySelector(".gift-icon").textContent =
+    message.classList.contains("show") ? "💝" : "🎁";
 }
 
 // FLOATING PETALS
 let petalsStarted = false;
-
 function startPetals(){
   if(petalsStarted) return;
-
   petalsStarted = true;
-
   setInterval(() => {
     const petal = document.createElement("div");
-
     petal.className = "petal";
     petal.textContent = Math.random() > 0.5 ? "🌸" : "♥";
     petal.style.left = Math.random() * 100 + "vw";
     petal.style.fontSize = (12 + Math.random()*13) + "px";
     petal.style.animationDuration = (6 + Math.random()*5) + "s";
-
     document.body.appendChild(petal);
-
-    setTimeout(() => petal.remove(), 12000);
-  }, 900);
+    setTimeout(() => petal.remove(),12000);
+  },900);
 }
 
 // INITIALIZE GALLERY
 updateGallery();
 
-// AUDIO ERROR CHECKS
-document.getElementById("ourSong").addEventListener("error",function(){
+// AUDIO FILE CHECKS
+document.getElementById("ourSong").addEventListener("error",() => {
   console.log("Song file not found. Check assets/photos/our-song.mp3");
 });
-
-document.getElementById("babyVoice").addEventListener("error",function(){
-  console.log("Voice file not found. Add assets/photos/baby-voice.mp3");
-});
-
-// PHOTO GALLERY
-let galleryIndex = 0;
-
-function updateGallery(){
-  document.getElementById("galleryPhoto").src = photos[galleryIndex];
-  document.getElementById("galleryCaption").textContent = captions[galleryIndex];
-  document.getElementById("photoCount").textContent =
-    `${galleryIndex+1} / ${photos.length}`;
-}
-
-function changePhoto(direction){
-  galleryIndex = (galleryIndex + direction + photos.length) % photos.length;
-  updateGallery();
-}
-
-// PHOTO VIEWER
-function showPhotoViewer(){
-  const viewer = document.getElementById("photoViewer");
-  document.getElementById("viewerImage").src = photos[galleryIndex];
-  viewer.style.display = "flex";
-}
-
-function closePhotoViewer(){
-  document.getElementById("photoViewer").style.display = "none";
-}
-
-document.addEventListener("keydown",function(event){
-  if(event.key === "Escape") closePhotoViewer();
-});
-
-// BIRTHDAY WISH
-function makeWish(){
-  const message = document.getElementById("wishText");
-  message.textContent =
-    "May every little wish in your heart find its way to you. Happy Birthday, Baby! ❤️";
-  document.querySelector(".cake").textContent = "🕯️🎂";
-}
-
-// GIFT SURPRISE
-function openGift(){
-  const message = document.getElementById("giftMessage");
-  message.classList.toggle("show");
-
-  const gift = document.querySelector(".gift-icon");
-  gift.textContent = message.classList.contains("show") ? "💝" : "🎁";
-}
-
-// FLOATING PETALS
-let petalsStarted = false;
-
-function startPetals(){
-  if(petalsStarted) return;
-  petalsStarted = true;
-
-  setInterval(() => {
-    const petal = document.createElement("div");
-    petal.className = "petal";
-    petal.textContent = Math.random() > 0.5 ? "🌸" : "♥";
-    petal.style.left = Math.random() * 100 + "vw";
-    petal.style.fontSize = (12 + Math.random()*13) + "px";
-    petal.style.animationDuration = (6 + Math.random()*5) + "s";
-
-    document.body.appendChild(petal);
-    setTimeout(() => petal.remove(), 12000);
-  }, 900);
-}
-
-// KEEP THE GALLERY READY
-updateGallery();
-
-// AUDIO HELP
-document.getElementById("ourSong").addEventListener("error",function(){
-  console.log("Song file not found. Check assets/photos/our-song.mp3");
-});
-
-document.getElementById("babyVoice").addEventListener("error",function(){
+document.getElementById("babyVoice").addEventListener("error",() => {
   console.log("Voice file not found. Add assets/photos/baby-voice.mp3 when ready.");
 });
+
 </script>
 
 </body>
